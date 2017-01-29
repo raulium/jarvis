@@ -7,9 +7,9 @@ personal home automation solution
 * Vacation Mode
 * Away Mode
 * Texting & external messaging
-** Emergency Contact
-** Call-out Sick
-** Deadman's Switch
+ * Emergency Contact
+ * Call-out Sick
+ * Deadman's Switch
 * Outerwear recommendations based on temperature and weather conditions
 * Calendar integration
 * Harnascian holidays
@@ -32,8 +32,8 @@ personal home automation solution
 ### Broken Stuff
 * Start Radio function (weblib) doesn't work
 * Fix speech system
-** If we play sound files each time, this could prevent Python from moving on before the sound is done playing. Rather than having to sleep each time after 'say'
-** OR, we could sleep for a length determined by the sound file... somehow... like in BIT.
+ * If we play sound files each time, this could prevent Python from moving on before the sound is done playing. Rather than having to sleep each time after 'say'
+ * OR, we could sleep for a length determined by the sound file... somehow... like in BIT.
 
 ## Dependencies
 
@@ -43,3 +43,4 @@ personal home automation solution
 * random
 * BeautifulSoup
 * urllib
+* Flask
