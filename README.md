@@ -5,7 +5,7 @@ personal home automation solution
 
 ### Deploy to Apache
 * Make applicaiton WSGI compliant, and deploy to Apache
-** [Instructions Here](http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html)
+ * [Instructions Here](http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html)
 
 ### Feature List
 * Vacation Mode
@@ -21,8 +21,8 @@ personal home automation solution
 * option to go to bed early
 * option to wake up earlier than normal
 * Mobile integration
-** side-load phone app
-** transfer functions to laptop while on travel
+ * side-load phone app
+ * transfer functions to laptop while on travel
 * lock screen
 
 ### Boring Stuff
