@@ -3,6 +3,10 @@ personal home automation solution
 
 ## TODO LIST
 
+### Deploy to Apache
+* Make applicaiton WSGI compliant, and deploy to Apache
+** [Instructions Here](http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html)
+
 ### Feature List
 * Vacation Mode
 * Away Mode
@@ -21,7 +25,6 @@ personal home automation solution
 ** transfer functions to laptop while on travel
 * lock screen
 
-
 ### Boring Stuff
 * Documentation
 * Comment the code!
@@ -36,7 +39,6 @@ personal home automation solution
  * OR, we could sleep for a length determined by the sound file... somehow... like in BIT.
 
 ## Dependencies
-
 * speech_recognition
 * subprocess
 * time
