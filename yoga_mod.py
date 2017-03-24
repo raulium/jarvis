@@ -1,73 +1,76 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
+from config import NAME
 # ============== INTERNAL LIBRARIES
+from interaction_mod import POSITIVE, say
 # ============== EXTERNAL LIBRARIES
+import time
 
 def stretch_Spinal():
-	Popen(['say', '-v', 'lee', 'Sit cross-legged.'])
+	say('Sit cross-legged.')
 	time.sleep(5)
 	i = 0
 	while i < 2:
-		Popen(['say', '-v', 'lee', 'Twist left.'])
+		say('Twist left.')
 		time.sleep(10)
-		Popen(['say', '-v', 'lee', 'Return to center.'])
+		say('Return to center.')
 		time.sleep(5)
-		Popen(['say', '-v', 'lee', 'Twist right.'])
+		say('Twist right.')
 		time.sleep(10)
-		Popen(['say', '-v', 'lee', 'Return to center.'])
+		say('Return to center.')
 		time.sleep(5)
 		i += 1;
-	Popen(['say', '-v', 'lee', 'Put your left hand on the floor. Inhale. Raise your right arm. While exhaling, reach left.'])
+	say('Put your left hand on the floor. Inhale. Raise your right arm. While exhaling, reach left.')
 	time.sleep(10)
-	Popen(['say', '-v', 'lee', 'Inhale, and relax a moment.'])
+	say('Inhale, and relax a moment.')
 	time.sleep(5)
-	Popen(['say', '-v', 'lee', 'Exhale and reach left, again.'])
+	say('Exhale and reach left, again.')
 	time.sleep(10)
-	Popen(['say', '-v', 'lee', 'Time to switch.'])
+	say('Time to switch.')
 	time.sleep(5)
-	Popen(['say', '-v', 'lee', 'Put your right hand on the floor. Inhale. Raise your left arm. While exhaling, reach right.'])
+	say('Put your right hand on the floor. Inhale. Raise your left arm. While exhaling, reach right.')
 	time.sleep(10)
-	Popen(['say', '-v', 'lee', 'Inhale, and relax a moment.'])
+	say('Inhale, and relax a moment.')
 	time.sleep(5)
-	Popen(['say', '-v', 'lee', 'Exhale and reach right, again.'])
+	say('Exhale and reach right, again.')
 	time.sleep(10)
 
 def stretch_Cat():
-	Popen(['say', '-v', 'lee', 'Come to all fours'])
+	say('Come to all fours')
 	time.sleep(5)
 	i = 0
 	while i < 3:
-		Popen(['say', '-v', 'lee', 'Curve your back toward the ceiling. Drawing your chin to your stomach.'])
+		say('Curve your back toward the ceiling. Drawing your chin to your stomach.')
 		time.sleep(10)
-		Popen(['say', '-v', 'lee', 'Inhale deeply'])
+		say('Inhale deeply')
 		time.sleep(5)
-		Popen(['say', '-v', 'lee', 'Exhale and arch your back.'])
+		say('Exhale and arch your back.')
 		time.sleep(5)
-		Popen(['say', '-v', 'lee', 'Slowly raise your head to the ceiling.'])
+		say('Slowly raise your head to the ceiling.')
 		time.sleep(5)
 		i += 1
 
 def stretch_Lunge():
-	Popen(['say', '-v', 'lee', 'Come to all fours'])
+	say('Come to all fours')
 	time.sleep(5)
 	i = 0
 	while i < 3:
-		Popen(['say', '-v', 'lee', 'Lunge with your right foot'])
+		say('Lunge with your right foot')
 		time.sleep(5)
-		Popen(['say', '-v', 'lee', "Don't forget to breathe."])
+		say("Don't forget to breathe.")
 		time.sleep(5)
-		Popen(['say', '-v', 'lee', 'Lunge with left foot.'])
+		say('Lunge with left foot.')
 		time.sleep(10)
 		i += 1
 
 def fuckGreg2():
 	setVolume(3)
-	Popen(['say', '-v', 'lee', "I've been instructed to try to further motivate you, " + NAME + "."])
+	say("I've been instructed to try to further motivate you, " + NAME + ".")
 	time.sleep(5)
-	Popen(['say', '-v', 'lee', 'Now for a real exercise. Stretching.'])
+	say('Now for a real exercise. Stretching.')
 	time.sleep(5)
 	stretch_Spinal()
 	stretch_Cat()
 	stretch_Lunge()
-	Popen(['say', '-v', 'lee', random.choice(POSITIVE) + 'All done. I hope that woke you up.'])
+	say(random.choice(POSITIVE) + 'All done. I hope that woke you up.')
