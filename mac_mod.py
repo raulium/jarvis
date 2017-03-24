@@ -1,7 +1,7 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import BASE_PATH, EMAIL, ICLOUD_PASS, IPHONE_ID, HOME_COORD
+from config import BASE_PATH, EMAIL, ICLOUD, IPHONE_ID, HOME_COORD
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
 import time
@@ -53,8 +53,8 @@ def ifMuted():
 
 
 # STOPPED WORKING -- FIX THIS
-# def startRadio():
-#     openPage("http://www.wgbh.org/audioPlayers/wgbh.cfm")
+def startRadio():
+    openPage("http://www.wgbh.org/audioPlayers/wgbh.cfm")
 
 
 def startMusic():
@@ -82,7 +82,7 @@ def openApp(APPNAME):
 # I really don't like this option. it doens't do well to identify the coordinates of the user
 # '''
 # def ishome():
-# 	api = PyiCloudService(EMAIL, ICLOUD_PASS)
+# 	api = PyiCloudService(EMAIL, ICLOUD)
 # 	for i in api.devices:
 # 		if IPHONE_ID in str(i):
 # 			if i.location() is not None:

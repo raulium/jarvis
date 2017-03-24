@@ -7,8 +7,7 @@ from interaction_mod import GREETING, WAKE, getReply, say, UNFINISHED
 from timing_mod import getCurrentTime, holidayDict, snooze, thirty_min_before
 from IFTTT_mod import IFTTT
 from lab_mod import labStatus
-from web_mod import openPage
-from mac_mod import setVolume, setDisplay, startMusic, ifMuted
+from mac_mod import setVolume, setDisplay, startMusic, ifMuted, openPage
 from weather_mod import dailyReport
 from math_mod import fuckGreg
 from yoga_mod import fuckGreg2
@@ -83,7 +82,7 @@ def morningRoutine():
 	hour = datetime.now().hour
 	saytime = "The time is " + str(hour) + " o'clock " + tod + "."
 
-    say(random.choice(GREETING) + ", " + NAME + ". " + saytime + " " + random.choice(WAKE))
+	say(random.choice(GREETING) + ", " + NAME + ". " + saytime + " " + random.choice(WAKE))
 	time.sleep(10)
 	say(statusMessage)
 	time.sleep(30)
@@ -101,7 +100,7 @@ def morningRoutine():
 			say("I'm sorry, I didn't quite catch that.")
 			time.sleep(2.5)
 		elif reply is "NULL":
-            say(NAME + " " + random.choice(LAZY))
+			say(NAME + " " + random.choice(LAZY))
 			time.sleep(3)
 			awake = 0
 			i += 1
@@ -117,7 +116,7 @@ def morningRoutine():
 
 	if awake == 0:
 		time.sleep(2)
-        say(andom.choice(UNFINISHED) + ", I can't be certain if you're awake yet.  So if you haven't turned off the music, I'm going to turn it up now.)
+		say(random.choice(UNFINISHED) + ", I can't be certain if you're awake yet.  So if you haven't turned off the music, I'm going to turn it up now.")
 		time.sleep(10)
 		setVolume(10)
 		time.sleep(600)

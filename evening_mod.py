@@ -3,14 +3,14 @@
 # ============== CONFIG PARAMETERS
 # ============== INTERNAL LIBRARIES
 from interaction_mod import WARN, say
-from time_mod import getCurrentTime, snooze
+from timing_mod import getCurrentTime, snooze
 from mac_mod import notification, setLivingRoom, setDisplay
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import time
 from subprocess import Popen
 
-ef eveningRoutine():
+def eveningRoutine():
 
 	# if ishome() is False:
 	#     return

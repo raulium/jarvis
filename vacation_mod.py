@@ -3,7 +3,7 @@
 # ============== CONFIG PARAMETERS
 # ============== INTERNAL LIBRARIES
 from timing_mod import snooze
-from IFTTT_mod import IFTTT_mod
+from IFTTT_mod import IFTTT
 from mac_mod import openApp, setLivingRoom, startRadio, setVolume, setDisplay
 # ============== EXTERNAL LIBRARIES
 

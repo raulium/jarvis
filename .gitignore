@@ -91,6 +91,7 @@ ENV/
 
 # OS generated files #
 ######################
+.plist
 .DS_Store
 .DS_Store?
 ._*
@@ -98,4 +99,3 @@ ENV/
 .Trashes
 ehthumbs.db
 Thumbs.db
-.plist
