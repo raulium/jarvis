@@ -4,8 +4,11 @@
 from config import WUNDERGROUND_KEY
 # ============== INTERNAL LIBRARIES
 from web_mod import MyOpener
+from interaction_mod import saiff
 # ============== EXTERNAL LIBRARIES
-import json
+import json, email
+from datetime import datetime
+
 
 def dailyReport():
 	data = getWeatherJSON('current')
@@ -23,12 +26,13 @@ def dailyReport():
 	high = data['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']
 	low = data['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']
 
-	if temp <= feels_like:
+	if temp >= feels_like:
 		temperature_string = "The temperature is " + str(temp) + " degrees, with a high of " + str(high) + " and a low of " + str(low) + "."
 	else:
 		temperature_string = "Though the temperature is " + str(temp) + ", it feels like " + str(feels_like) + " degrees.  It's expected to reach " + str(high) + " today, with a low of " + str(low) + "."
 
-	Popen(["say", '-v', 'lee', "-o", "/tmp/DailyReport.aiff", "As of " + str(observation_time) + " it is currently ", conditions + ".", temperature_string])
+	fullReport = "As of " + str(observation_time) + " it is currently " + conditions + "." + temperature_string
+	saiff(fullReport, "/tmp/DailyReport.aiff")
 
 def getWeatherJSON(weather_type):
 	if weather_type == 'current':
