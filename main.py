@@ -12,8 +12,9 @@ from weather_mod import dailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import logging
-from flask import Flask
+from flask import Flask, jsonify, request, current_app, abort
 from subprocess import Popen
+from datetime import datetime
 
 app = Flask(__name__)
 
