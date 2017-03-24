@@ -91,7 +91,7 @@ ENV/
 
 # OS generated files #
 ######################
-.plist
+local.jarvis.*.plist
 .DS_Store
 .DS_Store?
 ._*
