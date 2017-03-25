@@ -1,11 +1,13 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import NAME
+from config import NAME, WORK_LIST, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_MSG
 # ============== INTERNAL LIBRARIES
 from mac_mod import setVolume
+from gmail_mod import sendGmail
 # ============== EXTERNAL LIBRARIES
 import time, random
+from datetime import datetime
 import speech_recognition as sr
 from subprocess import Popen, os, PIPE
 
@@ -46,17 +48,26 @@ def say(STRING):
     Popen( ['say', '-v', 'Lee', STRING] )
 
 
-def saiff(STRING, FILENAME):    # I really don't know why I made this. Speech system todo?
+def saiff(STRING, FILENAME):
     Popen( ['say', '-v' 'Lee', '-o', str(FILENAME), str(STRING)] )
 
 
 def morningUserCheck():
+    if datetime.date.weekday() <= 4:
+        laboratoryOptions()
+    elif datetime.date.weekday() == 5:
+        volunteerOptions()
+    else:
+        dayOffOptions()
+
+
+def laboratoryOptions():
     while(1):
         say("Are you ready to start your day?")
         reply = getReply()
         if reply is "ERR":
             say("I'm sorry, I didn't quite catch that.")
-            time.sleep(2.5) # this might be where the saiff function would work
+            time.sleep(2.5)
         elif reply is "NULL":
             mystring = NAME + " " + random.choice(LAZY)
             say(mystring)
@@ -67,7 +78,7 @@ def morningUserCheck():
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
-                # SEND SICK MESSAGE HERE
+                sendGmail(WORK_LIST, "Sick Day", ILL_MSG)
                 time.sleep(2.5)
                 break
             if 'no' in confirm:
@@ -80,7 +91,7 @@ def morningUserCheck():
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
-                # SEND WFM MESSAGE HERE
+                sendGmail(WORK_LIST, "WFH Today", WFH_MSG)
                 time.sleep(2)
                 break
             if 'no' in confirm:
@@ -91,6 +102,67 @@ def morningUserCheck():
             say(random.choice(POSITIVE))
             time.sleep(2)
             break
+
+
+def volunteerOptions():
+    while(1):
+        say("Are you ready to start your day?")
+        reply = getReply()
+        if reply is "ERR":
+            say("I'm sorry, I didn't quite catch that.")
+            time.sleep(2.5)
+        elif reply is "NULL":
+            mystring = NAME + " " + random.choice(LAZY)
+            say(mystring)
+            time.sleep(3)
+        elif any(o in reply for o in ILL_KEYS):
+            say("I'm sorry to hear that. Would you like me to contact the Museum?")
+            time.sleep(2.5)
+            confirm = getReply()
+            if 'yes' in confirm:
+                say("Very well. Sending message now.")
+                sendGmail(VOLUNTEER_EMAIL, "Out Sick", VOLUNTEER_ILL_MSG)
+                time.sleep(2.5)
+                break
+            if 'no' in confirm:
+                say("Then you shouldn't say you're feeling ill.")
+                time.sleep(2.5)
+                continue
+        elif any(o in reply for o in WFH_KEYS):
+            say("Would you like me to notify the Museum?")
+            time.sleep(2.5)
+            confirm = getReply()
+            if 'yes' in confirm:
+                say("Very well. Sending message now.")
+                sendGmail(VOLUNTEER_EMAIL, "Out Today", VOLUNTEER_WFH_MSG)
+                time.sleep(2)
+                break
+            if 'no' in confirm:
+                say("Then you should have said you were ready to start your day.")
+                time.sleep(3.5)
+                break
+        else:
+            say(random.choice(POSITIVE))
+            time.sleep(2)
+            break
+
+
+def dayOffOptions():
+    while(1):
+        say("Are you ready to start your day?")
+        reply = getReply()
+        if reply is "ERR":
+            say("I'm sorry, I didn't quite catch that.")
+            time.sleep(2.5)
+        elif reply is "NULL":
+            mystring = NAME + " " + random.choice(LAZY)
+            say(mystring)
+            time.sleep(3)
+        else:
+            say(random.choice(POSITIVE))
+            time.sleep(2)
+            break
+
 
 def getReply():
     time.sleep(2)

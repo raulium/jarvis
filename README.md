@@ -39,6 +39,7 @@ personal home automation solution
    * OR, we could sleep for a length determined by the sound file... somehow... like in BIT.
 
 ## Dependencies
+* google-api-python-client
 * speech_recognition
 * subprocess
 * time

@@ -3,7 +3,7 @@
 # ============== CONFIG PARAMETERS\
 from config import DOW, NAME, SNOOZE_TIME
 # ============== INTERNAL LIBRARIES
-from interaction_mod import GREETING, WAKE, getReply, say, UNFINISHED
+from interaction_mod import GREETING, WAKE, getReply, say, UNFINISHED, laboratoryOptions, volunteerOptions, dayOffOptions
 from timing_mod import getCurrentTime, holidayDict, snooze, thirty_min_before
 from IFTTT_mod import IFTTT
 from lab_mod import labStatus
@@ -92,34 +92,42 @@ def morningRoutine():
 	# counted as an iteration.
 	# ------------------------------------------------
 
-	i = 0
-	while i < 3:
-		say("Are you awake?")
-		reply = getReply()
-		if reply is "ERR":
-			say("I'm sorry, I didn't quite catch that.")
-			time.sleep(2.5)
-		elif reply is "NULL":
-			say(NAME + " " + random.choice(LAZY))
-			time.sleep(3)
-			awake = 0
-			i += 1
-		else:
-			say(random.choice(POSITIVE))
-			time.sleep(2)
-			awake = 1
-			i = 3
+	# i = 0
+	# while i < 3:
+	# 	say("Are you awake?")
+	# 	reply = getReply()
+	# 	if reply is "ERR":
+	# 		say("I'm sorry, I didn't quite catch that.")
+	# 		time.sleep(2.5)
+	# 	elif reply is "NULL":
+	# 		say(NAME + " " + random.choice(LAZY))
+	# 		time.sleep(3)
+	# 		awake = 0
+	# 		i += 1
+	# 	else:
+	# 		say(random.choice(POSITIVE))
+	# 		time.sleep(2)
+	# 		awake = 1
+	# 		i = 3
+
+    if datetime.date.weekday() <= 4:
+        laboratoryOptions()
+    elif datetime.date.weekday() == 5:
+        volunteerOptions()
+    else:
+        dayOffOptions()
+
 
 	# ------------------------------------------------
 	# If I'm not awake, you are authorized to be annoying...
 	# ------------------------------------------------
 
-	if awake == 0:
-		time.sleep(2)
-		say(random.choice(UNFINISHED) + ", I can't be certain if you're awake yet.  So if you haven't turned off the music, I'm going to turn it up now.")
-		time.sleep(10)
-		setVolume(10)
-		time.sleep(600)
+	# if awake == 0:
+	# 	time.sleep(2)
+	# 	say(random.choice(UNFINISHED) + ", I can't be certain if you're awake yet.  So if you haven't turned off the music, I'm going to turn it up now.")
+	# 	time.sleep(10)
+	# 	setVolume(10)
+	# 	time.sleep(600)
 
 	# ------------------------------------------------
 	# Otherwise, I'm already up. Give me the weather, Cecil!
