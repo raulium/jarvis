@@ -110,12 +110,12 @@ def morningRoutine():
 	# 		awake = 1
 	# 		i = 3
 
-    if datetime.date.weekday() <= 4:
-        laboratoryOptions()
-    elif datetime.date.weekday() == 5:
-        volunteerOptions()
-    else:
-        dayOffOptions()
+	if datetime.date.weekday() <= 4:
+		laboratoryOptions()
+	elif datetime.date.weekday() == 5:
+		volunteerOptions()
+	else:
+		dayOffOptions()
 
 
 	# ------------------------------------------------

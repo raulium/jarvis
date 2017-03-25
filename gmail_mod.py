@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 # ============== CONFIG PARAMETERS
 from config import EMAIL
 # ============== INTERNAL LIBRARIES
@@ -5,7 +7,6 @@ from config import EMAIL
 import httplib2
 import os
 import base64
-from __future__ import print_function
 from apiclient import discovery, errors
 from oauth2client import client
 from oauth2client import tools

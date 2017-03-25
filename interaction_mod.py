@@ -1,13 +1,12 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import NAME, WORK_LIST, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_MSG
+from config import NAME, WORK_LIST, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG
 # ============== INTERNAL LIBRARIES
 from mac_mod import setVolume
 from gmail_mod import sendGmail
 # ============== EXTERNAL LIBRARIES
 import time, random
-from datetime import datetime
 import speech_recognition as sr
 from subprocess import Popen, os, PIPE
 
@@ -50,15 +49,6 @@ def say(STRING):
 
 def saiff(STRING, FILENAME):
     Popen( ['say', '-v' 'Lee', '-o', str(FILENAME), str(STRING)] )
-
-
-def morningUserCheck():
-    if datetime.date.weekday() <= 4:
-        laboratoryOptions()
-    elif datetime.date.weekday() == 5:
-        volunteerOptions()
-    else:
-        dayOffOptions()
 
 
 def laboratoryOptions():
