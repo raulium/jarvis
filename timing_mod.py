@@ -6,6 +6,7 @@ from config import HOLIDAY_KEY
 from web_mod import MyOpener
 # ============== EXTERNAL LIBRARIES
 from datetime import datetime, timedelta
+import json, time
 
 def getCurrentTime():
 	hour = datetime.now().hour
@@ -73,8 +74,8 @@ def holidayDict():
 
 	jsonurl = page.read()
 	data = json.loads(jsonurl)
-	if 'holidays' in data:
-		print data
+	if len(data['holidays']) > 0:
+		print(data)
 		return str(data["holidays"][0]["name"])
 	else:
 		return None

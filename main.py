@@ -5,18 +5,20 @@ from config import NAME, SNOOZE_TIME, READING_TIME, BED_TIME, NORMAL_TIME, DOW, 
 # ============== INTERNAL LIBRARIES
 from vacation_mod import away, back, vMorningRoutine, vEveningRoutine
 from interaction_mod import say
-from mac_mod import startMusic
+from mac_mod import startMusic, setVolume
 from morning_mod import morningRoutine
 from evening_mod import eveningRoutine
 from weather_mod import dailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
-import logging
+import logging, json
 from flask import Flask, jsonify, request, current_app, abort
 from subprocess import Popen
 from datetime import datetime
 
 app = Flask(__name__)
+
+VACATION = False
 
 @app.route('/')
 def index():
@@ -153,6 +155,22 @@ def music_time():
 		if MASTERKEY in data["key"]:
 			startMusic()
 			return str(datetime.now()) + ":\tMUSIC TIME - SUCCESS!\n"
+		else:
+			abort(404)
+	else:
+		app.logger.debug("No JSON recieved")
+		abort(404)
+
+@app.route('/vol', methods=['POST'])
+def volume():
+	data = request.get_json(force=True)
+
+	if data is not None:
+		app.logger.debug("JSON Recieved -- " + str(data))
+
+		if MASTERKEY in data["key"]:
+			setVolume(7)
+			return str(datetime.now()) + ":\tVOLUME TIME - SUCCESS!\n"
 		else:
 			abort(404)
 	else:

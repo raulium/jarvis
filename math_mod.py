@@ -28,7 +28,7 @@ def doMath():   # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BRE
 
     if (reply == answer):
         say(random.choice(POSITIVE))
-        time.sleeo(2)
+        time.sleep(2)
         return 1
     else:
         say(random.choice(NEGATIVE))

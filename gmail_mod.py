@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 # ============== CONFIG PARAMETERS
-from config import EMAIL
+from config import EMAIL, USERNAME
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
 import httplib2
@@ -24,7 +24,7 @@ CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'GMAIL API Python Quickstart'
 
 def get_credentials():
-    home_dir = os.path.expanduser('~')
+    home_dir = os.path.expanduser('/Users/' + USERNAME + '/')
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)

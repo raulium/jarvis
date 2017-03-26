@@ -4,8 +4,9 @@
 from config import NAME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import POSITIVE, say
+from mac_mod import setVolume
 # ============== EXTERNAL LIBRARIES
-import time
+import time, random
 
 def stretch_Spinal():
 	say('Sit cross-legged.')

@@ -92,6 +92,7 @@ ENV/
 # OS generated files #
 ######################
 local.jarvis.*.plist
+client_secret.json
 .DS_Store
 .DS_Store?
 ._*

@@ -15,7 +15,8 @@ def setVolume(VALUE):
     is from 0 - 7. And real numbers. Meaning 3.5 is the center of the scale.
     ... w... t... f...
     '''
-    Popen( ['osascript', '-e', 'set Volume' + str(VALUE)] )
+    cmd = 'set Volume ' + str(VALUE)
+    Popen( ['osascript', '-e', cmd] )
 
 
 def setLivingRoom():

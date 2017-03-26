@@ -12,7 +12,7 @@ from weather_mod import dailyReport
 from math_mod import fuckGreg
 from yoga_mod import fuckGreg2
 # ============== EXTERNAL LIBRARIES
-import time
+import time, random
 from datetime import datetime
 from subprocess import Popen
 
@@ -110,9 +110,9 @@ def morningRoutine():
 	# 		awake = 1
 	# 		i = 3
 
-	if datetime.date.weekday() <= 4:
+	if datetime.today().weekday() <= 4:
 		laboratoryOptions()
-	elif datetime.date.weekday() == 5:
+	elif datetime.today().weekday() == 5:
 		volunteerOptions()
 	else:
 		dayOffOptions()
