@@ -6,7 +6,7 @@ from config import HOLIDAY_KEY
 from web_mod import MyOpener
 # ============== EXTERNAL LIBRARIES
 from datetime import datetime, timedelta
-import json, time
+import time, holidays
 
 def getCurrentTime():
 	hour = datetime.now().hour
@@ -63,19 +63,27 @@ def thirty_min_before(time_string):
 	return new_string
 
 def holidayDict():
-	year = str(datetime.now().year)
-	month = str(datetime.now().month)
-	day = str(datetime.now().day)
+	us_holidays = holidays.UnitedStates()
+	t = datetime.now().date()
 
-	url = "https://holidayapi.com/v1/holidays?key=" + HOLIDAY_KEY +"&country=US&year=" + year + "&month=" + month + "&day=" + day
-
-	agent = MyOpener()
-	page = agent.open(url)
-
-	jsonurl = page.read()
-	data = json.loads(jsonurl)
-	if len(data['holidays']) > 0:
-		print(data)
-		return str(data["holidays"][0]["name"])
+	if (t in us_holidays):
+		return us_holidays.get(t)
 	else:
 		return None
+
+	# year = str(datetime.now().year)
+	# month = str(datetime.now().month)
+	# day = str(datetime.now().day)
+	#
+	# url = "https://holidayapi.com/v1/holidays?key=" + HOLIDAY_KEY +"&country=US&year=" + year + "&month=" + month + "&day=" + day
+	#
+	# agent = MyOpener()
+	# page = agent.open(url)
+	#
+	# jsonurl = page.read()
+	# data = json.loads(jsonurl)
+	# if len(data['holidays']) > 0:
+	# 	print(data)
+	# 	return str(data["holidays"][0]["name"])
+	# else:
+	# 	return None

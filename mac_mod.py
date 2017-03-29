@@ -1,12 +1,17 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import BASE_PATH, EMAIL, ICLOUD, IPHONE_ID, HOME_COORD
+from config import BASE_PATH, EMAIL, ICLOUD, IPHONE_ID, HOME_COORD, USERNAME
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
 import time
 from subprocess import Popen, os, PIPE
 from pyicloud import PyiCloudService
+
+
+def macTerm(CMD):
+    runcmd = ['sudo', '-u', USERNAME] + CMD
+    Popen( runcmd )
 
 
 def setVolume(VALUE):
@@ -15,21 +20,23 @@ def setVolume(VALUE):
     is from 0 - 7. And real numbers. Meaning 3.5 is the center of the scale.
     ... w... t... f...
     '''
-    cmd = 'set Volume ' + str(VALUE)
-    Popen( ['osascript', '-e', cmd] )
+    cmd = ['osascript', '-e', 'set' 'Volume', str(VALUE)]
+    macTerm(cmd)
 
 
 def setLivingRoom():
     """ Set Audio Output to Living Room. """
     setVolume(7)
-    Popen( ['osascript', BASE_PATH + 'AppleScripts/audioLivingRoom.applescript'] )
+    cmd = [BASE_PATH + 'AppleScripts/audioLivingRoom.applescript']
+    macTerm(cmd)
     time.sleep(1)
 
 
 def setDisplay():
     """ Set Audio Output to Cinema Display. """
     setVolume(4)
-    Popen( ['osascript', BASE_PATH + 'AppleScripts/audioDisplay.applescript'] )
+    cmd = [BASE_PATH + 'AppleScripts/audioDisplay.applescript']
+    macTerm(cmd)
     time.sleep(1)
 
 
@@ -41,7 +48,8 @@ def setDisplay():
 
 def notification(TITLE, MSG):
     """ Send notification to Notificaiton Center. """
-    Popen(["osascript", "-e", "display notification " + '"' + MSG + '"' + " with title " + '"' + TITLE +'" sound name "Hero"'])
+    cmd = ['osascript', '-e', "display notification " + '"' + MSG + '"' + " with title " + '"' + TITLE +'" sound name "Hero"']
+    macTerm(cmd)
 
 
 def ifMuted():

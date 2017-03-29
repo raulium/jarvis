@@ -31,7 +31,7 @@ def dailyReport():
 	else:
 		temperature_string = "Though the temperature is " + str(temp) + ", it feels like " + str(feels_like) + " degrees.  It's expected to reach " + str(high) + " today, with a low of " + str(low) + "."
 
-	fullReport = "As of " + str(observation_time) + " it is currently " + conditions + "." + temperature_string
+	fullReport = "As of " + str(observation_time) + " it is currently " + conditions + ". " + temperature_string
 	saiff(fullReport, "/tmp/DailyReport.aiff")
 
 def getWeatherJSON(weather_type):

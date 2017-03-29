@@ -138,6 +138,7 @@ def morningRoutine():
 
 	time.sleep(5)
 	IFTTT("lights_on")
+	IFTTT("wakeup")
 	Popen(["afplay", "/tmp/DailyReport.aiff"])
 
 	SPECIAL_TIME = None

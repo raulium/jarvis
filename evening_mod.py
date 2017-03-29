@@ -1,13 +1,14 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
+from config import READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
-from interaction_mod import WARN, say
+from interaction_mod import WARN, say, saiff
 from timing_mod import getCurrentTime, snooze
-from mac_mod import notification, setLivingRoom, setDisplay
+from mac_mod import notification, setLivingRoom, setDisplay, setVolume
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
-import time
+import time, random
 from subprocess import Popen
 
 def eveningRoutine():
@@ -27,8 +28,10 @@ def eveningRoutine():
 	timeStr = str(h) + ":" + str(m) + " " + t
 	TITLE = "Time Notification"
 	MSG =  "It is " + timeStr + "."
+	notification(TITLE, MSG)
 
-	Popen(["say", '-v', 'lee', "-o", "/tmp/BedTime.aiff", random.choice(WARN), "It is " + timeStr + "."])
+	rMSG = random.choice(WARN) + " It is " + timeStr + "."
+	saiff(rMSG, "/tmp/BedTime.aiff")
 
 	setLivingRoom()
 	time.sleep(20)
