@@ -1,7 +1,7 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS\
-from config import DOW, NAME, SNOOZE_TIME
+from config import DOW, NAME, SNOOZE_TIME, NORMAL_TIME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import GREETING, WAKE, getReply, say, UNFINISHED, laboratoryOptions, volunteerOptions, dayOffOptions
 from timing_mod import getCurrentTime, holidayDict, snooze, thirty_min_before

@@ -1,6 +1,7 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
+from config import SNOOZE_TIME, READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
 from timing_mod import snooze
 from IFTTT_mod import IFTTT

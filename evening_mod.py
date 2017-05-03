@@ -5,7 +5,7 @@ from config import READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import WARN, say, saiff
 from timing_mod import getCurrentTime, snooze
-from mac_mod import notification, setLivingRoom, setDisplay, setVolume
+from mac_mod import notification, setLivingRoom, setDisplay
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import time, random

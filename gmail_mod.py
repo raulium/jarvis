@@ -66,4 +66,4 @@ def sendGmail(mail_to, mail_subject, mail_body):
     subject = mail_subject
     message_text = mail_body
     compose_message = create_message(sender=sender, to=to, subject=subject, message_text=message_text)
-    send_message(service = service, user_id='me', message=compose_message)
+    send_message(service=service, user_id='me', message=compose_message)

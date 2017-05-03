@@ -1,7 +1,7 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import NAME, WORK_LIST, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG
+from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG
 # ============== INTERNAL LIBRARIES
 from mac_mod import setVolume
 from gmail_mod import sendGmail
@@ -68,7 +68,7 @@ def laboratoryOptions():
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
-                sendGmail(WORK_LIST, "Sick Day", ILL_MSG)
+                sendGmail(WORK_LIST_STRING, "Sick Day", ILL_MSG)
                 time.sleep(2.5)
                 break
             if 'no' in confirm:
@@ -81,7 +81,7 @@ def laboratoryOptions():
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
-                sendGmail(WORK_LIST, "WFH Today", WFH_MSG)
+                sendGmail(WORK_LIST_STRING, "WFH Today", WFH_MSG)
                 time.sleep(2)
                 break
             if 'no' in confirm:
