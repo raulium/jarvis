@@ -1,44 +1,19 @@
 # jarvis 2.0
 personal home automation solution
 
-## TODO LIST
+## Goal
+To develop a master control program that would automate my schedule, as well as take care of things around the house. For example:
+* Turn on the porch lights and inside lights at sunset
+* Turn off the porch lights at sunrise
+* Water my lawn appropriately
+* Be a smart alarm by knowing my schedule (don't wake me up if I don't have work, don't let me sleep in if I have an early meeting, etc)
 
-### Deploy to Apache
-* Make applicaiton WSGI compliant, and deploy to Apache
-   * [Instructions Here](http://csparpa.github.io/blog/2013/03/how-to-deploy-flask-applications-to-apache-webserver.html)
-
-### Feature List
-* Vacation Mode
-* Away Mode
-* Texting & external messaging
-   * Emergency Contact
-   * Call-out Sick
-   * Deadman's Switch
-* Outerwear recommendations based on temperature and weather conditions
-* Calendar integration
-* Harnascian holidays
-* location services
-* option to go to bed early
-* option to wake up earlier than normal
-* Mobile integration
-   * side-load phone app
-   * transfer functions to laptop while on travel
-* lock screen
-
-### Boring Stuff
-* Documentation
-* Comment the code!
-* clean up files
-* better logging
-* functions should test inputs
-
-### Broken Stuff
-* Start Radio function (weblib) doesn't work
-* Fix speech system
-   * If we play sound files each time, this could prevent Python from moving on before the sound is done playing. Rather than having to sleep each time after 'say'
-   * OR, we could sleep for a length determined by the sound file... somehow... like in BIT.
+## Getting Started
+Don't. Just don't. Not right now, at least.  This requires a config.py module for all the working bits (api keys to online services, file paths, etc). As soon as this is in a more stable form, I'll have to post it.
 
 ## Dependencies
+Exhaustive list of python libraries needed
+
 * google-api-python-client
 * speech_recognition
 * subprocess
