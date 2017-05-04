@@ -26,10 +26,10 @@ def dailyReport():
 	high = data['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']
 	low = data['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']
 
-	if temp >= feels_like:
-		temperature_string = "The temperature is " + str(temp) + " degrees, with a high of " + str(high) + " and a low of " + str(low) + "."
-	else:
+	if feels_like < temp:
 		temperature_string = "Though the temperature is " + str(temp) + ", it feels like " + str(feels_like) + " degrees.  It's expected to reach " + str(high) + " today, with a low of " + str(low) + "."
+	else:
+		temperature_string = "The temperature is " + str(temp) + " degrees, with a high of " + str(high) + " and a low of " + str(low) + "."
 
 	fullReport = "As of " + str(observation_time) + " it is currently " + conditions + ". " + temperature_string
 	saiff(fullReport, "/tmp/DailyReport.aiff")
