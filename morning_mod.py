@@ -87,65 +87,34 @@ def morningRoutine():
 	say(statusMessage)
 	time.sleep(30)
 
-	# ------------------------------------------------
-	# Ask three times if I'm awake.  Missinterpretation isn't
-	# counted as an iteration.
-	# ------------------------------------------------
-
-	# i = 0
-	# while i < 3:
-	# 	say("Are you awake?")
-	# 	reply = getReply()
-	# 	if reply is "ERR":
-	# 		say("I'm sorry, I didn't quite catch that.")
-	# 		time.sleep(2.5)
-	# 	elif reply is "NULL":
-	# 		say(NAME + " " + random.choice(LAZY))
-	# 		time.sleep(3)
-	# 		awake = 0
-	# 		i += 1
-	# 	else:
-	# 		say(random.choice(POSITIVE))
-	# 		time.sleep(2)
-	# 		awake = 1
-	# 		i = 3
-
+	myStatus = 0
 	if datetime.today().weekday() <= 4:
-		laboratoryOptions()
+		myStatus = laboratoryOptions()
 	elif datetime.today().weekday() == 5:
-		volunteerOptions()
+		myStatus = volunteerOptions()
 	else:
-		dayOffOptions()
-
-
-	# ------------------------------------------------
-	# If I'm not awake, you are authorized to be annoying...
-	# ------------------------------------------------
-
-	# if awake == 0:
-	# 	time.sleep(2)
-	# 	say(random.choice(UNFINISHED) + ", I can't be certain if you're awake yet.  So if you haven't turned off the music, I'm going to turn it up now.")
-	# 	time.sleep(10)
-	# 	setVolume(10)
-	# 	time.sleep(600)
+		myStatus = dayOffOptions()
 
 	# ------------------------------------------------
 	# Otherwise, I'm already up. Give me the weather, Cecil!
 	# ------------------------------------------------
 
-	fuckGreg()
-	fuckGreg2()
+	if myStatus < 1:
+		fuckGreg()
+		time.sleep(5)
+		IFTTT("lights_on")
+		IFTTT("wakeup")
+		Popen(["afplay", "/tmp/DailyReport.aiff"])
+	else:
+		say("Everything has been taken care of. Feel free to go back to bed.")
+	
+	# fuckGreg2()
 
-	time.sleep(5)
-	IFTTT("lights_on")
-	IFTTT("wakeup")
-	Popen(["afplay", "/tmp/DailyReport.aiff"])
+	# SPECIAL_TIME = None
 
-	SPECIAL_TIME = None
-
-	time.sleep(30)
-	while hour < 9:
-		if ifMuted():
-			setVolume(5)
-			say("Muting me isn't going to give you any more sleep, " + NAME + ".")
-		hour = datetime.now().hour
+	# time.sleep(30)
+	# while hour < 9:
+	# 	if ifMuted():
+	# 		setVolume(5)
+	# 		say("Muting me isn't going to give you any more sleep, " + NAME + ".")
+	# 	hour = datetime.now().hour

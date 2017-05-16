@@ -38,7 +38,7 @@ WARN = [NAME + ", it's that time again.", "It is time to get ready for bed.",
         "The bells are tolling, " + NAME + ".", "Early to bed, early to rise."]
 
 ILL_KEYS=["not feeling well", "sick", "don't feel", "ill"]
-WFH_KEYS=["staying", "sleeping", "not going in", "day off"]
+WFH_KEYS=["staying", "sleeping", "not going in", "day off", "working from home"]
 
 # ============== INTERACTION functions
 
@@ -70,11 +70,11 @@ def laboratoryOptions():
                 say("Very well. Sending message now.")
                 sendGmail(WORK_LIST_STRING, "Sick Day", ILL_MSG)
                 time.sleep(2.5)
-                break
+                return 1
             if 'no' in confirm:
                 say("Then you shouldn't say you're feeling ill.")
                 time.sleep(2.5)
-                continue
+                return 0
         elif any(o in reply for o in WFH_KEYS):
             say("Would you like me to notify the Laboratory?")
             time.sleep(2.5)
@@ -83,11 +83,11 @@ def laboratoryOptions():
                 say("Very well. Sending message now.")
                 sendGmail(WORK_LIST_STRING, "WFH Today", WFH_MSG)
                 time.sleep(2)
-                break
+                return 0
             if 'no' in confirm:
                 say("Then you should have said you were ready to start your day.")
                 time.sleep(3.5)
-                break
+                return 0
         else:
             say(random.choice(POSITIVE))
             time.sleep(2)
@@ -113,11 +113,11 @@ def volunteerOptions():
                 say("Very well. Sending message now.")
                 sendGmail(VOLUNTEER_EMAIL, "Out Sick", VOLUNTEER_ILL_MSG)
                 time.sleep(2.5)
-                break
+                return 1
             if 'no' in confirm:
                 say("Then you shouldn't say you're feeling ill.")
                 time.sleep(2.5)
-                continue
+                return 0
         elif any(o in reply for o in WFH_KEYS):
             say("Would you like me to notify the Museum?")
             time.sleep(2.5)
@@ -126,11 +126,11 @@ def volunteerOptions():
                 say("Very well. Sending message now.")
                 sendGmail(VOLUNTEER_EMAIL, "Out Today", VOLUNTEER_WFH_MSG)
                 time.sleep(2)
-                break
+                return 1
             if 'no' in confirm:
                 say("Then you should have said you were ready to start your day.")
                 time.sleep(3.5)
-                break
+                return 0
         else:
             say(random.choice(POSITIVE))
             time.sleep(2)

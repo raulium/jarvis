@@ -39,6 +39,8 @@ def getWeatherJSON(weather_type):
 		url = "http://api.wunderground.com/api/" + WUNDERGROUND_KEY + "/conditions/q/MA/waltham.json"
 	if weather_type == 'forecast':
 		url = "http://api.wunderground.com/api/" + WUNDERGROUND_KEY + "/forecast/q/MA/waltham.json"
+	if weather_type == 'astronomy':
+		url = "http://api.wunderground.com/api/" + WUNDERGROUND_KEY + "/astronomy/q/MA/waltham.json"
 	agent = MyOpener()
 	page = agent.open(url)
 	jsonurl = page.read()
