@@ -67,11 +67,15 @@ def startRadio():
 
 
 def startMusic():
-	cmd1 = 'osascript -e "tell application \\"Spotify\\"" -e "activate" -e "end tell"'
-	cmd2 = 'osascript -e "tell application \\"Spotify\\"" -e "next track" -e "end tell"'
-	Popen( cmd1, shell=True )
-	time.sleep(5)
-	Popen( cmd2, shell=True )
+    closeApp('Spotify')
+    time.sleep(5)
+    openApp('Spotify')
+    time.sleep(5)
+    cmd1 = 'osascript -e "tell application \\"Spotify\\"" -e "activate" -e "end tell"'
+    cmd2 = 'osascript -e "tell application \\"Spotify\\"" -e "next track" -e "end tell"'
+    Popen( cmd1, shell=True )
+    time.sleep(5)
+    Popen( cmd2, shell=True )
 
 
 def openPage(URL):
@@ -87,23 +91,23 @@ def openApp(APPNAME):
 	cmd = 'open -a ' + '"' + str(APPNAME) + '"'
 	Popen(cmd, shell=True)
 
-# '''
-# I really don't like this option. it doens't do well to identify the coordinates of the user
-# '''
-# def ishome():
-# 	api = PyiCloudService(EMAIL, ICLOUD)
-# 	for i in api.devices:
-# 		if IPHONE_ID in str(i):
-# 			if i.location() is not None:
-# 				place = i.location()
-# 			else:
-# 				place = dict()
-# 				place['latitude'] = HOME_COORD['minlat']
-# 				place['longitude'] = HOME_COORD['minlon']
-# 	if HOME_COORD['minlat'] <= place['latitude'] <= HOME_COORD['maxlat']:
-# 		if HOME_COORD['minlon'] <= place['longitude'] <= HOME_COORD['maxlon']:
-# 			return True
-# 		else:
-# 			return False
-# 	else:
-# 		return False
+'''
+I really don't like this option. it doens't do well to identify the coordinates of the user
+'''
+def ishome():
+	api = PyiCloudService(EMAIL, ICLOUD)
+	for i in api.devices:
+		if IPHONE_ID in str(i):
+			if i.location() is not None:
+				place = i.location()
+			else:
+				place = dict()
+				place['latitude'] = HOME_COORD['minlat']
+				place['longitude'] = HOME_COORD['minlon']
+	if HOME_COORD['minlat'] <= place['latitude'] <= HOME_COORD['maxlat']:
+		if HOME_COORD['minlon'] <= place['longitude'] <= HOME_COORD['maxlon']:
+			return True
+		else:
+			return False
+	else:
+		return False

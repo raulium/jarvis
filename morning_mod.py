@@ -5,22 +5,23 @@ from config import DOW, NAME, SNOOZE_TIME, NORMAL_TIME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import GREETING, WAKE, getReply, say, UNFINISHED, laboratoryOptions, volunteerOptions, dayOffOptions
 from timing_mod import getCurrentTime, holidayDict, snooze, thirty_min_before
-from IFTTT_mod import IFTTT
+from IFTTT_mod import IFTTT, IFTTTcmd
 from lab_mod import labStatus
-from mac_mod import setVolume, setDisplay, startMusic, ifMuted, openPage
-from weather_mod import dailyReport
+from mac_mod import setVolume, setDisplay, startMusic, ifMuted, openPage, ishome
+from weather_mod import dailyReport, getSunsetDTO
 from math_mod import fuckGreg
 from yoga_mod import fuckGreg2
 # ============== EXTERNAL LIBRARIES
 import time, random
-from datetime import datetime
+from datetime import datetime, timedelta
 from subprocess import Popen
+from atd import atd
 
 def morningRoutine():
 	"""Follow the mother-fucking routine, Donnie."""
 
-	# if ishome() is False:
-	#     return
+	if ishome() is False:
+	    return
 
 	# if OVERRIDE:
 	#     print "ABORTING!"
@@ -76,6 +77,12 @@ def morningRoutine():
 	setVolume(5)
 	setDisplay()
 	dailyReport()
+	sunset = getSunsetDTO()
+	l = IFTTTcmd('living_room_lifx')
+	w = IFTTTcmd('living_room_wink')
+	atd.at(l, sunset)
+	atd.at(w, sunset)
+
 	startMusic()
 	time.sleep(30)
 
@@ -105,9 +112,16 @@ def morningRoutine():
 		IFTTT("lights_on")
 		IFTTT("wakeup")
 		Popen(["afplay", "/tmp/DailyReport.aiff"])
+		snooze(dto_to_string(datetime.now() + timedelta(minutes=50)))
+		if ishome():
+			IFTTT("wakeup")
+			say("You will be late for work. You now have 20 minutes to depart.")
+			snooze(dto_to_string(datetime.now() + timedelta(minutes=20)))
+			if ishome():
+				startMusic()
 	else:
 		say("Everything has been taken care of. Feel free to go back to bed.")
-	
+
 	# fuckGreg2()
 
 	# SPECIAL_TIME = None

@@ -36,6 +36,16 @@ def snooze(new_alarm):
 		time.sleep(wait)
 		wait = int((datetime(year, month, day, newhour, newmin) - datetime.now()).total_seconds())
 
+def dto_to_string(MY_DTO):
+	hour = MY_DTO.hour
+	mins = MY_DTO.minute
+	if hour > 12:
+		time = str(hour - 12) + ':' + str(mins) + " PM"
+		return time
+	else:
+		time = str(hour) + ':' + str(mins) + " AM"
+		return time
+
 def thirty_min_before(time_string):
 	h = int(time_string.split(':')[0])
 	m = int(time_string.split(':')[1].split(' ')[0])

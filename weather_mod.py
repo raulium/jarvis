@@ -7,7 +7,7 @@ from web_mod import MyOpener
 from interaction_mod import saiff
 # ============== EXTERNAL LIBRARIES
 import json, email
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def dailyReport():
@@ -46,3 +46,11 @@ def getWeatherJSON(weather_type):
 	jsonurl = page.read()
 	data = json.loads(jsonurl)
 	return data
+
+def getSunsetDTO():
+	data = getWeatherJSON('astronomy')
+	h = data['sun_phase']['sunset']['hour']
+	m = data['sun_phase']['sunset']['hour']
+	t = datetime.now().replace(hour=int(h), minute=int(m), second=0, microsecond=0)
+	t = t - timedelta(minutes=30)
+	return t

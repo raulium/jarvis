@@ -1,14 +1,15 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG
+from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, CONTACTS
 # ============== INTERNAL LIBRARIES
-from mac_mod import setVolume
+from mac_mod import setVolume, openApp
 from gmail_mod import sendGmail
 # ============== EXTERNAL LIBRARIES
 import time, random
 import speech_recognition as sr
 from subprocess import Popen, os, PIPE
+from twilio.rest import Client
 
 
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
@@ -174,14 +175,16 @@ def getReply():
     return reply                # Return transcript of reply
 
 # ============== TEXTING FUNCTIONS -- REQUIRES REFACTORING AND TESTING
-# def jarvisTEXT(PERSON, MESSAGE):
-#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-#     client.messages.create(
-#         to=CONTACTS[PERSON],
-#         from_="+15097613225",
-#         body=MESSAGE
-#     )
+def jarvisTEXT(PERSON, MESSAGE):
+    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    client.messages.create(
+        to=CONTACTS[PERSON],
+        from_="+15097616131",
+        body=MESSAGE
+    )
 
-# def text(PERSON, MESSAGE):
-#     conString = 'tell application "Messages" to send "' + MESSAGE + '" to buddy "' + PERSON + '" of service "SMS"'
-#     Popen(['osascript', '-e', conString])
+def text(PERSON, MESSAGE):
+    openApp('Messages')
+    time.sleep(2)
+    conString = 'tell application "Messages" to send "' + MESSAGE + '" to buddy "' + PERSON + '" of service "SMS"'
+    Popen(['osascript', '-e', conString])

@@ -1,17 +1,17 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import NAME, SNOOZE_TIME, READING_TIME, BED_TIME, NORMAL_TIME, DOW, MASTERKEY, HOST_IP
+from config import NAME, SNOOZE_TIME, READING_TIME, BED_TIME, NORMAL_TIME, DOW, MASTERKEY, HOST_IP, BASE_PATH
 # ============== INTERNAL LIBRARIES
-from vacation_mod import away, back, vMorningRoutine, vEveningRoutine
+from vacation_mod import away, back, vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say
-from mac_mod import startMusic, setVolume
+from mac_mod import startMusic, setVolume, setLivingRoom, setDisplay
 from morning_mod import morningRoutine
 from evening_mod import eveningRoutine
 from weather_mod import dailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
-import logging, json
+import logging, json, time
 from flask import Flask, jsonify, request, current_app, abort
 from subprocess import Popen
 from datetime import datetime
@@ -33,7 +33,8 @@ def data_check():
 		app.logger.debug("No JSON recieved")
 		return False
 
-VACATION = False
+def apiReturn(myString):
+	return str(datetime.now()) + ":\t" + myString + "\t -- SUCCESS!\n"
 
 @app.route('/')
 def index():
@@ -77,7 +78,35 @@ def loading():
 	status = data_check()
 	if status:
 		say("Loading system services.")
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
+	else:
+		abort(404)
+
+@app.route('/away', methods=['POST'])
+def gone():
+	f = 'AWAY'
+	status = data_check()
+	if status:
+		if checkVacationStatus():
+			say('Vacation mode already active.')
+			return apiReturn('REDUNDANT')
+		setVacation()
+		say("Vacation mode activated.")
+		return apiReturn(f)
+	else:
+		abort(404)
+
+@app.route('/back', methods=['POST'])
+def here():
+	f = 'BACK'
+	status = data_check()
+	if status:
+		if not checkVacationStatus():
+			say("Vacation mode already deactivated.")
+			return apiReturn("REDUNDANT")
+		rmVacation()
+		say("Vacation mode deactivated.")
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -87,7 +116,7 @@ def testing():
 	status = data_check()
 	if status:
 		say("Test complete. All systems are functioning as expected.")
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -96,11 +125,11 @@ def morn_func():
 	f = "MORNING"
 	status = data_check()
 	if status:
-		if VACATION:
+		if checkVacationStatus():
 			vMorningRoutine()
 		else:
 			morningRoutine()
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -109,11 +138,11 @@ def eve_func():
 	f = "EVENING"
 	status = data_check()
 	if status:
-		if VACATION:
+		if checkVacationStatus():
 			vEveningRoutine()
 		else:
 			eveningRoutine()
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -124,7 +153,7 @@ def get_curr():
 	if status:
 		dailyReport()
 		Popen(["afplay", "/tmp/DailyReport.aiff"])
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -135,7 +164,7 @@ def movie_time():
 	if status:
 		IFTTT('dim_lighting')
 		IFTTT('movie_time')
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -145,7 +174,7 @@ def music_time():
 	status = data_check()
 	if status:
 		startMusic()
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
 
@@ -155,9 +184,26 @@ def volume():
 	status = data_check()
 	if status:
 		setVolume(7)
-		return str(datetime.now()) + ":\t" + f + "\t -- SUCCESS!\n"
+		return apiReturn(f)
 	else:
 		abort(404)
+
+@app.route('/redalert', methods=['POST'])
+def redalert():
+	f = "REDALERT"
+	status = data_check()
+	if status:
+		setLivingRoom()
+		time.sleep(3)
+		IFTTT('dim_lighting')
+		Popen(["afplay", BASE_PATH + "/git/jarvis/redalert.mp3"])
+		IFTTT('klaxon')
+		time.sleep(10)
+		setDisplay()
+		return apiReturn(f)
+	else:
+		abort(404)
+
 
 if __name__=='__main__':
 	# logger = logging.getLogger('werkzeug')
