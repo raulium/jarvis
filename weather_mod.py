@@ -50,7 +50,7 @@ def getWeatherJSON(weather_type):
 def getSunsetDTO():
 	data = getWeatherJSON('astronomy')
 	h = data['sun_phase']['sunset']['hour']
-	m = data['sun_phase']['sunset']['hour']
+	m = data['sun_phase']['sunset']['minute']
 	t = datetime.now().replace(hour=int(h), minute=int(m), second=0, microsecond=0)
-	t = t - timedelta(minutes=30)
+	t = t - timedelta(minutes=40)
 	return t
