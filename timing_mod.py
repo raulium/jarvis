@@ -1,7 +1,7 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import HOLIDAY_KEY
+from config import HOLIDAY_KEY, MY_STATE
 # ============== INTERNAL LIBRARIES
 from web_mod import MyOpener
 # ============== EXTERNAL LIBRARIES
@@ -73,7 +73,7 @@ def thirty_min_before(time_string):
 	return new_string
 
 def holidayDict():
-	us_holidays = holidays.UnitedStates()
+	us_holidays = holidays.UnitedStates(state=MY_STATE)
 	t = datetime.now().date()
 
 	if (t in us_holidays):
