@@ -11,7 +11,6 @@ import speech_recognition as sr
 from subprocess import Popen, os, PIPE
 from twilio.rest import Client
 
-
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
 
 GREETING = ["Good morning", "Top of the morning", "Rise and shine",
@@ -20,10 +19,6 @@ GREETING = ["Good morning", "Top of the morning", "Rise and shine",
 WAKE = ["This is your monring wake up call.", "It is time to start your day.",
         "which means it's that time again.", "So let's not be lazy."]
 
-UNFINISHED = ["Because you haven't finished my programming",
-                "Due to the fact I am an unfinnished project",
-                "As I have been given no external sensors"]
-
 LAZY = ["It is time to get up.", "You can't blame anyone but yourself.",
             "It will only get worse from here if you don't get up."]
 
@@ -31,7 +26,7 @@ POSITIVE = ["Excellent!", "Perfect!", "Splended!", "Good enough.",
             "Wonderful.", "Outstanding!", "Marvelous!", "Great!", "Fantastic!",
             "Okay."]
 
-NEGATIVE = ["Incorrect", "No.", "That's weak", "That's offensive",
+NEGATIVE = ["Incorrect", "No.", "That's offensive",
             "Inferior performance", "R you even trying", "I think not.",
             "This is sad."]
 
