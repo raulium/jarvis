@@ -1,47 +1,54 @@
 #!/usr/local/env python
 
+# ============== EXTERNAL LIBRARIES
+import time
+import random
 # ============== CONFIG PARAMETERS
 # ============== INTERNAL LIBRARIES
 from interaction_mod import POSITIVE, NEGATIVE, say, getReply
-# ============== EXTERNAL LIBRARIES
-import time, random
-import speech_recognition as sr
-from subprocess import Popen, os, PIPE
 
 
-def doMath():   # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BREAK!)
-    val1 = random.randint(3,9)
-    val2 = random.randint(6,9)
+def do_math():   # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BREAK!)
+    '''
+    Function poses the user a math problem, evaluates the response
+    and determines if the user got the problem right (1) or wrong (0)
+    '''
+    val1 = random.randint(3, 9)
+    val2 = random.randint(6, 9)
     answer = val1 * val2
 
     say('What is ' + str(val1) + ' multiplied by ' + str(val2) + '?')
     time.sleep(1)   # THIS IS HIGHLY PROBLEMATIC TO BE RELYING UPON ALL THE TIME
     reply = getReply()
-    print "Answer:\t" + str(answer)
-    print "Reply:\t" + str(reply)
+    answer_status = 0
     try:
         reply = int(reply)
     except ValueError:
         say(random.choice(NEGATIVE))
         time.sleep(2)
-        return 0
+        answer_status = 0
 
-    if (reply == answer):
+    if reply == answer:
         say(random.choice(POSITIVE))
         time.sleep(2)
-        return 1
+        answer_status = 1
     else:
         say(random.choice(NEGATIVE))
         time.sleep(2)
-        return 0
+        answer_status = 0
+    return answer_status
 
 
-def fuckGreg(): # Maybe rename this?
+def maths(): # Maybe rename this?
+    '''
+    Function traps user in a loop, requiring the user to answer three (3)
+    math problems correctly before exiting.
+    '''
     say("How about a little exercise?")
     time.sleep(3)
     i = 0
     while i < 3:
-        result = doMath()
+        result = do_math()
         if result < 1:
             i = 0
         else:
@@ -49,8 +56,9 @@ def fuckGreg(): # Maybe rename this?
 
 
 def main():
-    fuckGreg()
+    ''' run maths '''
+    maths()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
