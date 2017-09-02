@@ -14,7 +14,7 @@ from IFTTT_mod import IFTTT, IFTTTcmd
 from lab_mod import labStatus
 from mac_mod import setVolume, setDisplay, startMusic, openPage, ishome
 from weather_mod import getSunsetDTO, newDailyReport
-from math_mod import fuckGreg
+from math_mod import maths
 
 # =======================================================================
 
@@ -87,7 +87,7 @@ def morningRoutine():
         myStatus = dayOffOptions()
 
     if myStatus < 1:
-        fuckGreg()
+        maths()
         time.sleep(5)
         IFTTT("lights_on")
         IFTTT("wakeup")
