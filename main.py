@@ -1,9 +1,9 @@
-#!/usr/local/env python
+#!/usr/bin/python
 
 # ============== CONFIG PARAMETERS
-from config import NAME, SNOOZE_TIME, READING_TIME, BED_TIME, NORMAL_TIME, DOW, MASTERKEY, HOST_IP, BASE_PATH
+from config import MASTERKEY, HOST_IP, BASE_PATH
 # ============== INTERNAL LIBRARIES
-from vacation_mod import away, back, vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
+from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say
 from mac_mod import startMusic, setVolume, setLivingRoom, setDisplay
 from morning_mod import morningRoutine
@@ -11,8 +11,8 @@ from evening_mod import eveningRoutine
 from weather_mod import dailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
-import logging, json, time
-from flask import Flask, jsonify, request, current_app, abort
+import time
+from flask import Flask, request, abort
 from subprocess import Popen
 from datetime import datetime
 

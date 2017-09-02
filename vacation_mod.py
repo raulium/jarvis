@@ -23,15 +23,21 @@ def vEveningRoutine():
 	IFTTT("lights_off")
 
 def away():
-	openApp("Google Chrome")
-	setLivingRoom()
-	startRadio()
-	setVolume(5)
-	setVolume(5)
+	if not checkAwayStatus():
+		cmd = ['touch', '/tmp/away.lock']
+		macTerm(cmd)
+		# setLivingRoom()
+		# setVolume(5)
 
 def back():
-	closeApp("Google Chrome")
-	setDisplay()
+	if checkAwayStatus():
+		cmd = ['rm', '/tmp/away.lock']
+		macTerm(cmd)
+		# setDisplay()
+
+def checkAwayStatus():
+	result = os.path.exists('/tmp/away.lock')
+	return result;
 
 def setVacation():
 	cmd = ['touch', '/tmp/vacation.lock']

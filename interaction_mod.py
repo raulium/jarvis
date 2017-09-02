@@ -8,16 +8,17 @@ from gmail_mod import sendGmail
 # ============== EXTERNAL LIBRARIES
 import time, random
 import speech_recognition as sr
-from subprocess import Popen, os, PIPE
+from subprocess import Popen
 from twilio.rest import Client
 
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
 
 GREETING = ["Good morning", "Top of the morning", "Rise and shine",
-            "Another dawn, another day"]
+            "Another dawn, another day", "Time to get up"]
 
 WAKE = ["This is your monring wake up call.", "It is time to start your day.",
-        "which means it's that time again.", "So let's not be lazy."]
+        "which means it's that time again.", "So let's not be lazy.",
+        "And all is well."]
 
 LAZY = ["It is time to get up.", "You can't blame anyone but yourself.",
             "It will only get worse from here if you don't get up."]
@@ -35,6 +36,12 @@ WARN = [NAME + ", it's that time again.", "It is time to get ready for bed.",
 
 ILL_KEYS=["not feeling well", "sick", "don't feel", "ill"]
 WFH_KEYS=["staying", "sleeping", "not going in", "day off", "working from home"]
+
+DAY_ASSES=["It seems today will be a", "It appears today will be a", "Today will be a", "It looks as though today might be a"]
+GREAT=["n amazing", " great", " beautiful", " terrific"]
+GOOD=[" good", " pretty good", " plesant", " favorable"]
+OKAY=["n alright", " decent", "n okay", " satisfactory"]
+BAD=[" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]
 
 # ============== INTERACTION functions
 

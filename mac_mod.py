@@ -5,7 +5,7 @@ from config import BASE_PATH, EMAIL, ICLOUD, IPHONE_ID, HOME_COORD, USERNAME
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
 import time
-from subprocess import Popen, os, PIPE
+from subprocess import Popen, PIPE
 from pyicloud import PyiCloudService
 
 
@@ -95,12 +95,10 @@ def startRadio():
 
 
 def startMusic():
-    closeApp('Spotify')
-    time.sleep(5)
     openApp('Spotify')
     time.sleep(5)
     cmd1 = 'osascript -e "tell application \\"Spotify\\"" -e "activate" -e "end tell"'
-    cmd2 = 'osascript -e "tell application \\"Spotify\\"" -e "next track" -e "end tell"'
+    cmd2 = 'osascript -e "tell application \\"Spotify\\"" -e "play track \\"spotify:user:spotify:playlist:37i9dQZEVXcR6wHtFF48p2\\"" -e "end tell"'
     Popen( cmd1, shell=True )
     time.sleep(5)
     Popen( cmd2, shell=True )

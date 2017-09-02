@@ -5,7 +5,7 @@ from config import HOLIDAY_KEY, MY_STATE
 # ============== INTERNAL LIBRARIES
 from web_mod import MyOpener
 # ============== EXTERNAL LIBRARIES
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time, holidays
 
 def getCurrentTime():
@@ -15,10 +15,15 @@ def getCurrentTime():
 		tod = "PM"
 	else:
 		tod = "AM"
-	min = datetime.now().minute
-	if min < 10:
-		min = "0" + str(min)
-	return hour, min, tod
+	m = datetime.now().minute
+	if m < 10:
+		m = "0" + str(m)
+	return hour, m, tod
+
+def getTime():
+	hour, m, tod = getCurrentTime()
+	myTime = str(hour) + ":" + str(m) + " " + str(tod)
+	return myTime
 
 def snooze(new_alarm):
 	newhour = int(new_alarm.split(':')[0])
@@ -81,19 +86,31 @@ def holidayDict():
 	else:
 		return None
 
-	# year = str(datetime.now().year)
-	# month = str(datetime.now().month)
-	# day = str(datetime.now().day)
-	#
-	# url = "https://holidayapi.com/v1/holidays?key=" + HOLIDAY_KEY +"&country=US&year=" + year + "&month=" + month + "&day=" + day
-	#
-	# agent = MyOpener()
-	# page = agent.open(url)
-	#
-	# jsonurl = page.read()
-	# data = json.loads(jsonurl)
-	# if len(data['holidays']) > 0:
-	# 	print(data)
-	# 	return str(data["holidays"][0]["name"])
-	# else:
-	# 	return None
+def julianDate():
+	return date.today().timetuple().tm_yday
+
+def whatSeason(**keyword_parameters):
+	"""
+	Returns integer 0-3 for the season of a given julian date, or current date if no
+	julian is provided.
+	0 = spring
+	1 = summer
+	2 = fall
+	3 = winter
+	"""
+	JULIAN = julianDate()
+	if ('julian' in keyword_parameters):
+		JULIAN = keyword_parameters['julian']
+	# "day of year" ranges for the northern hemisphere
+	spring = range(80, 171)
+	summer = range(172, 263)
+	fall = range(264, 354)
+	# winter = everything else
+	if JULIAN in spring:
+	  return 0
+	elif JULIAN in summer:
+	  return 1
+	elif JULIAN in fall:
+	  return 2
+	else:
+	  return 3

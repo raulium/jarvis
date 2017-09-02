@@ -1,134 +1,104 @@
-#!/usr/local/env python
+#!/usr/bin/python
 
+# ============== EXTERNAL LIBRARIES
+import time
+import random
+from datetime import datetime, timedelta
+from atd import atd
 # ============== CONFIG PARAMETERS\
 from config import DOW, NAME, SNOOZE_TIME, NORMAL_TIME
 # ============== INTERNAL LIBRARIES
-from interaction_mod import GREETING, WAKE, getReply, say, laboratoryOptions, volunteerOptions, dayOffOptions
-from timing_mod import getCurrentTime, holidayDict, snooze, thirty_min_before, dto_to_string
+from interaction_mod import GREETING, WAKE, say, laboratoryOptions, volunteerOptions, dayOffOptions, DAY_ASSES
+from timing_mod import holidayDict, snooze, thirty_min_before, dto_to_string, getTime
 from IFTTT_mod import IFTTT, IFTTTcmd
 from lab_mod import labStatus
-from mac_mod import setVolume, setDisplay, startMusic, ifMuted, openPage, ishome
-from weather_mod import dailyReport, getSunsetDTO
+from mac_mod import setVolume, setDisplay, startMusic, openPage, ishome
+from weather_mod import getSunsetDTO, newDailyReport
 from math_mod import fuckGreg
-from yoga_mod import fuckGreg2
-# ============== EXTERNAL LIBRARIES
-import time, random
-from datetime import datetime, timedelta
-from subprocess import Popen
-from atd import atd
+
+# =======================================================================
+
+# [Good] Morning [Raul]. | The time is [Time], and [All is well]. | [It seems today will be a] [beautiful] [day of the week]
+# The temperature is [temp], with an expected high of [high] and a low of [low].
+# [Bad conditions]
+#    - conditions
+#    - dew point
+#    - dew point distance
+# [Holiday condition]
+# And may I also wish you a happy [holiday]
+
+# NEW MORNING
 
 def morningRoutine():
-	"""Follow the mother-fucking routine, Donnie."""
+    WD = datetime.today().weekday()
+    day_evaluation, bad_conditions, weather_segment = newDailyReport()
+    print("Bad Conditions: " + ', '.join(bad_conditions))
+    day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[WD] + "."
+    bad_segment = " "
+    if len(bad_conditions) > 0:
+        bad_segment = "Weather conditions to consider are: " + ', '.join(bad_conditions)
+    holiday_segment = ""
+    holString = holidayDict()
+    if holString:
+        holiday_segment = "And may I also wish you a happy " + holString + "."
 
-	if ishome() is False:
-	    return
+    statusMessage = day_segment + ". " + weather_segment + ". " + bad_segment + ". " + holiday_segment + "."
 
-	# if OVERRIDE:
-	#     print "ABORTING!"
-	#     return
+    if WD >= 5:  # It's a weekend
+        snooze(thirty_min_before(SNOOZE_TIME))
+        IFTTT("sunrise")
+        snooze(SNOOZE_TIME)
+    else:
+        if labStatus(): # Where "True" or "1" means closed
+            if not holString:
+                openPage("http://www.ll.mit.edu/status/index.html")
+                statusMessage = "The laboratory appears to be closed today.  I've opened the lab's status page, if you care to learn more. " + statusMessage
+            snooze(thirty_min_before(SNOOZE_TIME))
+            IFTTT("sunrise")
+            snooze(SNOOZE_TIME)
+        else:
+            snooze(thirty_min_before(NORMAL_TIME))
+            IFTTT("sunrise")
+            snooze(NORMAL_TIME)
 
-	# ------------------------------------------------
-	# CAUTION:  There is an "assumption" that the program is
-	#           launching by crontab everyday at 7AM; so this could
-	#           be problematic if, say, we were 12 hours off.
-	#           The program does not check what the current time is
-	#           as a condition to run -- it just runs.
-	# ------------------------------------------------
+    setVolume(5)
+    setDisplay()
 
-	hour, min, tod = getCurrentTime()
+    sunset = getSunsetDTO()
+    l = IFTTTcmd('living_room_lifx')
+    w = IFTTTcmd('living_room_wink')
+    atd.at(l, sunset)
+    atd.at(w, sunset)
 
-	# ------------------------------------------------
-	# Check if work is closed.
-	# ------------------------------------------------
+    startMusic()
+    time.sleep(30)
+    greeting_segment = random.choice(GREETING) + ", " + NAME + "."
+    time_segment = "The time is " + getTime() + " " + random.choice(WAKE)
+    say(greeting_segment + ". " + time_segment)
 
-	WD = datetime.today().weekday()
+    time.sleep(40)
 
-	statusMessage = " "
+    myStatus = 0
+    if datetime.today().weekday() <= 4:
+        myStatus = laboratoryOptions()
+    elif datetime.today().weekday() == 5:
+        myStatus = volunteerOptions()
+    else:
+        myStatus = dayOffOptions()
 
-	if WD >= 5:  # It's a weekend
-		holString = holidayDict()
-		if holString:
-			statusMessage = "Happy " + holString + "! My gift to you was two hours of extra sleep."
-		else:
-			statusMessage = "Happy " + str(DOW[WD]) + "," + NAME + ". I hope you're satisfied with the extra sleep."
-		snooze(thirty_min_before(SNOOZE_TIME))
-		IFTTT("sunrise")
-		snooze(SNOOZE_TIME)
-	else:
-		if labStatus(): # Where "True" or "1" means closed
-			holString = holidayDict()
-			if holString: #Today is a holiday
-				statusMessage = "Happy " + holString + "! My gift to you was two hours of extra sleep."
-			else:
-				openPage("http://www.ll.mit.edu/status/index.html")
-				statusMessage = "The laboratory appears to be closed today, so I took the liberty to let you sleep in.  I've opened the lab's status, if you care to learn more."
-			snooze(thirty_min_before(SNOOZE_TIME))
-			IFTTT("sunrise")
-			snooze(SNOOZE_TIME)
-		else:
-			snooze(thirty_min_before(NORMAL_TIME))
-			IFTTT("sunrise")
-			snooze(NORMAL_TIME)
-
-	# ------------------------------------------------
-	# Time to start the show . . .
-	# ------------------------------------------------
-
-	setVolume(5)
-	setDisplay()
-	dailyReport()
-	sunset = getSunsetDTO()
-	l = IFTTTcmd('living_room_lifx')
-	w = IFTTTcmd('living_room_wink')
-	atd.at(l, sunset)
-	atd.at(w, sunset)
-
-	startMusic()
-	time.sleep(30)
-
-	hour = datetime.now().hour
-	saytime = "The time is " + str(hour) + " o'clock " + tod + "."
-
-	say(random.choice(GREETING) + ", " + NAME + ". " + saytime + " " + random.choice(WAKE))
-	time.sleep(10)
-	say(statusMessage)
-	time.sleep(30)
-
-	myStatus = 0
-	if datetime.today().weekday() <= 4:
-		myStatus = laboratoryOptions()
-	elif datetime.today().weekday() == 5:
-		myStatus = volunteerOptions()
-	else:
-		myStatus = dayOffOptions()
-
-	# ------------------------------------------------
-	# Otherwise, I'm already up. Give me the weather, Cecil!
-	# ------------------------------------------------
-
-	if myStatus < 1:
-		fuckGreg()
-		time.sleep(5)
-		IFTTT("lights_on")
-		IFTTT("wakeup")
-		Popen(["afplay", "/tmp/DailyReport.aiff"])
-		snooze(dto_to_string(datetime.now() + timedelta(minutes=50)))
-		if ishome():
-			IFTTT("wakeup")
-			say("You will be late for work. You now have 20 minutes to depart.")
-			snooze(dto_to_string(datetime.now() + timedelta(minutes=20)))
-			if ishome():
-				startMusic()
-	else:
-		say("Everything has been taken care of. Feel free to go back to bed.")
-
-	# fuckGreg2()
-
-	# SPECIAL_TIME = None
-
-	# time.sleep(30)
-	# while hour < 9:
-	# 	if ifMuted():
-	# 		setVolume(5)
-	# 		say("Muting me isn't going to give you any more sleep, " + NAME + ".")
-	# 	hour = datetime.now().hour
+    if myStatus < 1:
+        fuckGreg()
+        time.sleep(5)
+        IFTTT("lights_on")
+        IFTTT("wakeup")
+        say(statusMessage)
+        snooze(dto_to_string(datetime.now() + timedelta(minutes=50)))
+        if ishome():
+            IFTTT("wakeup")
+            setVolume(7)
+            say("You will be late for work. You now have 20 minutes to depart.")
+            snooze(dto_to_string(datetime.now() + timedelta(minutes=20)))
+            IFTTT("wakeup")
+            startMusic()
+    else:
+        say("Everything has been taken care of. Feel free to go back to bed.")
