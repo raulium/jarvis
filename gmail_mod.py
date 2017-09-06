@@ -15,6 +15,7 @@ from email.MIMEText import MIMEText
 
 try:
     import argparse
+
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 except ImportError:
     flags = None
@@ -22,6 +23,7 @@ except ImportError:
 SCOPES = 'https://www.googleapis.com/auth/gmail.send'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'GMAIL API Python Quickstart'
+
 
 def get_credentials():
     home_dir = os.path.expanduser('/Users/' + USERNAME + '/')
@@ -41,6 +43,7 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+
 def create_message(sender, to, subject, message_text):
     message = MIMEText(message_text)
     message['to'] = to
@@ -48,14 +51,16 @@ def create_message(sender, to, subject, message_text):
     message['subject'] = subject
     return {'raw': base64.urlsafe_b64encode(message.as_string())}
 
+
 def send_message(service, user_id, message):
     try:
         message = (service.users().messages().send(userId=user_id, body=message)
-                    .execute())
+                   .execute())
         print("Message Id: " + str(message['id']))
         return message
-    except errors.HttpError, error:
+    except errors.HttpError as error:
         print('An error occurred: ' + str(error))
+
 
 def sendGmail(mail_to, mail_subject, mail_body):
     credentials = get_credentials()

@@ -1,15 +1,17 @@
 #!/usr/local/env python
 
+# ============== EXTERNAL LIBRARIES
+import random
+import time
+from subprocess import Popen
+import speech_recognition as sr
+from twilio.rest import Client
+from gmail_mod import sendGmail
 # ============== CONFIG PARAMETERS
-from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, CONTACTS
+from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, \
+    CONTACTS
 # ============== INTERNAL LIBRARIES
 from mac_mod import setVolume, openApp
-from gmail_mod import sendGmail
-# ============== EXTERNAL LIBRARIES
-import time, random
-import speech_recognition as sr
-from subprocess import Popen
-from twilio.rest import Client
 
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
 
@@ -21,7 +23,7 @@ WAKE = ["This is your monring wake up call.", "It is time to start your day.",
         "And all is well."]
 
 LAZY = ["It is time to get up.", "You can't blame anyone but yourself.",
-            "It will only get worse from here if you don't get up."]
+        "It will only get worse from here if you don't get up."]
 
 POSITIVE = ["Excellent!", "Perfect!", "Splended!", "Good enough.",
             "Wonderful.", "Outstanding!", "Marvelous!", "Great!", "Fantastic!",
@@ -34,28 +36,30 @@ NEGATIVE = ["Incorrect", "No.", "That's offensive",
 WARN = [NAME + ", it's that time again.", "It is time to get ready for bed.",
         "The bells are tolling, " + NAME + ".", "Early to bed, early to rise."]
 
-ILL_KEYS=["not feeling well", "sick", "don't feel", "ill"]
-WFH_KEYS=["staying", "sleeping", "not going in", "day off", "working from home"]
+ILL_KEYS = ["not feeling well", "sick", "don't feel", "ill"]
+WFH_KEYS = ["staying", "sleeping", "not going in", "day off", "working from home"]
 
-DAY_ASSES=["It seems today will be a", "It appears today will be a", "Today will be a", "It looks as though today might be a"]
-GREAT=["n amazing", " great", " beautiful", " terrific"]
-GOOD=[" good", " pretty good", " plesant", " favorable"]
-OKAY=["n alright", " decent", "n okay", " satisfactory"]
-BAD=[" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]
+DAY_ASSES = ["It seems today will be a", "It appears today will be a", "Today will be a",
+             "It looks as though today might be a"]
+GREAT = ["n amazing", " great", " beautiful", " terrific"]
+GOOD = [" good", " pretty good", " plesant", " favorable"]
+OKAY = ["n alright", " decent", "n okay", " satisfactory"]
+BAD = [" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]
+
 
 # ============== INTERACTION functions
 
 
 def say(STRING):
-    Popen( ['say', '-v', 'Lee', STRING] )
+    Popen(['say', '-v', 'Lee', STRING])
 
 
 def saiff(STRING, FILENAME):
-    Popen( ['say', '-v' 'Lee', '-o', str(FILENAME), str(STRING)] )
+    Popen(['say', '-v' 'Lee', '-o', str(FILENAME), str(STRING)])
 
 
 def laboratoryOptions():
-    while(1):
+    while 1:
         say("Are you ready to start your day?")
         reply = getReply()
         if reply is "ERR":
@@ -98,7 +102,7 @@ def laboratoryOptions():
 
 
 def volunteerOptions():
-    while(1):
+    while 1:
         say("Are you ready to start your day?")
         reply = getReply()
         if reply is "ERR":
@@ -141,7 +145,7 @@ def volunteerOptions():
 
 
 def dayOffOptions():
-    while(1):
+    while 1:
         say("Are you ready to start your day?")
         reply = getReply()
         if reply is "ERR":
@@ -163,18 +167,19 @@ def getReply():
     try:
         r = sr.Recognizer()
         with sr.Microphone() as source:
-            audio = r.listen(source, timeout = 10)
+            audio = r.listen(source, timeout=10)
         try:
             reply = r.recognize_google(audio)
         except LookupError:
-            reply = "ERR"       # Bad input condition
+            reply = "ERR"  # Bad input condition
     except sr.WaitTimeoutError:
-        reply = "NULL"          # Nil heard
+        reply = "NULL"  # Nil heard
     except sr.UnknownValueError:
-        reply = "ERR"           # Bad input condition
+        reply = "ERR"  # Bad input condition
     setVolume(4)
     time.sleep(0.5)
-    return reply                # Return transcript of reply
+    return reply  # Return transcript of reply
+
 
 # ============== TEXTING FUNCTIONS -- REQUIRES REFACTORING AND TESTING
 def jarvisTEXT(PERSON, MESSAGE):
@@ -184,6 +189,7 @@ def jarvisTEXT(PERSON, MESSAGE):
         from_="+15097616131",
         body=MESSAGE
     )
+
 
 def text(PERSON, MESSAGE):
     openApp('Messages')

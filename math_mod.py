@@ -8,17 +8,17 @@ import random
 from interaction_mod import POSITIVE, NEGATIVE, say, getReply
 
 
-def do_math():   # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BREAK!)
-    '''
+def do_math():  # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BREAK!)
+    """
     Function poses the user a math problem, evaluates the response
     and determines if the user got the problem right (1) or wrong (0)
-    '''
+    """
     val1 = random.randint(3, 9)
     val2 = random.randint(6, 9)
     answer = val1 * val2
 
     say('What is ' + str(val1) + ' multiplied by ' + str(val2) + '?')
-    time.sleep(1)   # THIS IS HIGHLY PROBLEMATIC TO BE RELYING UPON ALL THE TIME
+    time.sleep(1)  # THIS IS HIGHLY PROBLEMATIC TO BE RELYING UPON ALL THE TIME
     reply = getReply()
     answer_status = 0
     try:
@@ -39,11 +39,11 @@ def do_math():   # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BR
     return answer_status
 
 
-def maths(): # Maybe rename this?
-    '''
+def maths():  # Maybe rename this?
+    """
     Function traps user in a loop, requiring the user to answer three (3)
     math problems correctly before exiting.
-    '''
+    """
     say("How about a little exercise?")
     time.sleep(3)
     i = 0
@@ -56,7 +56,7 @@ def maths(): # Maybe rename this?
 
 
 def main():
-    ''' run maths '''
+    """ run maths """
     maths()
 
 

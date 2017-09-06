@@ -9,44 +9,53 @@ from mac_mod import openApp, setLivingRoom, startRadio, setVolume, setDisplay, m
 # ============== EXTERNAL LIBRARIES
 import os.path
 
+
 def vMorningRoutine():
-	snooze(SNOOZE_TIME)
-	# setLivingRoom()
-	# startRadio()
+    snooze(SNOOZE_TIME)
+
+
+# setLivingRoom()
+# startRadio()
 
 def vEveningRoutine():
-	snooze(READING_TIME)
-	# closeApp("Google Chrome")
-	IFTTT("reading")
-	snooze(BED_TIME)
-	IFTTT("sunset")
-	IFTTT("lights_off")
+    snooze(READING_TIME)
+    # closeApp("Google Chrome")
+    IFTTT("reading")
+    snooze(BED_TIME)
+    IFTTT("sunset")
+    IFTTT("lights_off")
+
 
 def away():
-	if not checkAwayStatus():
-		cmd = ['touch', '/tmp/away.lock']
-		macTerm(cmd)
-		# setLivingRoom()
-		# setVolume(5)
+    if not checkAwayStatus():
+        cmd = ['touch', '/tmp/away.lock']
+        macTerm(cmd)
+    # setLivingRoom()
+    # setVolume(5)
+
 
 def back():
-	if checkAwayStatus():
-		cmd = ['rm', '/tmp/away.lock']
-		macTerm(cmd)
-		# setDisplay()
+    if checkAwayStatus():
+        cmd = ['rm', '/tmp/away.lock']
+        macTerm(cmd)
+    # setDisplay()
+
 
 def checkAwayStatus():
-	result = os.path.exists('/tmp/away.lock')
-	return result;
+    result = os.path.exists('/tmp/away.lock')
+    return result
+
 
 def setVacation():
-	cmd = ['touch', '/tmp/vacation.lock']
-	macTerm(cmd)
+    cmd = ['touch', '/tmp/vacation.lock']
+    macTerm(cmd)
+
 
 def rmVacation():
-	cmd = ['rm', '/tmp/vacation.lock']
-	macTerm(cmd)
+    cmd = ['rm', '/tmp/vacation.lock']
+    macTerm(cmd)
+
 
 def checkVacationStatus():
-	result = os.path.exists('/tmp/vacation.lock')
-	return result;
+    result = os.path.exists('/tmp/vacation.lock')
+    return result

@@ -3,7 +3,8 @@
 # ============== CONFIG PARAMETERS
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
-import urllib, re
+import re
+import urllib
 from BeautifulSoup import BeautifulSoup as bsp
 
 

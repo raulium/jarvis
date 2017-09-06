@@ -8,45 +8,44 @@ from timing_mod import getCurrentTime, snooze
 from mac_mod import notification, setLivingRoom, setDisplay
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
-import time, random
+import time
+import random
 from subprocess import Popen
+
 
 def eveningRoutine():
 
-	# if ishome() is False:
-	#     return
+    h, m, t = getCurrentTime()
+    timestring = str(h) + ":" + str(m) + " " + t
+    title = "Time Notification"
+    msg = "It is " + timestring + "."
+    notification(title, msg)
 
-	h, m, t = getCurrentTime()
-	timeStr = str(h) + ":" + str(m) + " " + t
-	TITLE = "Time Notification"
-	MSG =  "It is " + timeStr + "."
-	notification(TITLE, MSG)
+    snooze("8:50 PM")
 
-	snooze("8:50 PM")
+    h, m, t = getCurrentTime()
+    timestring = str(h) + ":" + str(m) + " " + t
+    title = "Time Notification"
+    msg = "It is " + timestring + "."
+    notification(title, msg)
 
-	h, m, t = getCurrentTime()
-	timeStr = str(h) + ":" + str(m) + " " + t
-	TITLE = "Time Notification"
-	MSG =  "It is " + timeStr + "."
-	notification(TITLE, MSG)
+    rmsg = random.choice(WARN) + " It is " + timestring + "."
+    saiff(rmsg, "/tmp/BedTime.aiff")
 
-	rMSG = random.choice(WARN) + " It is " + timeStr + "."
-	saiff(rMSG, "/tmp/BedTime.aiff")
+    setLivingRoom()
+    time.sleep(20)
+    Popen(["afplay", "/tmp/BedTime.aiff"])
+    time.sleep(10)
+    setDisplay()
 
-	setLivingRoom()
-	time.sleep(20)
-	Popen(["afplay", "/tmp/BedTime.aiff"])
-	time.sleep(10)
-	setDisplay()
+    notification(title, "This computer will lock in 10 min.")
+    snooze(READING_TIME)
 
-	notification(TITLE, "This computer will lock in 10 min.")
-	snooze(READING_TIME)
+    IFTTT("reading")
 
-	IFTTT("reading")
-
-	snooze("9:55 PM")
-	IFTTT("light_notice")
-	snooze(BED_TIME)
-	IFTTT("light_notice")
-	IFTTT("sunset")
-	IFTTT("lights_off")
+    snooze("9:55 PM")
+    IFTTT("light_notice")
+    snooze(BED_TIME)
+    IFTTT("light_notice")
+    IFTTT("sunset")
+    IFTTT("lights_off")

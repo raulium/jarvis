@@ -16,6 +16,7 @@ from mac_mod import setVolume, setDisplay, startMusic, openPage, ishome
 from weather_mod import getSunsetDTO, newDailyReport
 from math_mod import maths
 
+
 # =======================================================================
 
 # [Good] Morning [Raul]. | The time is [Time], and [All is well]. | [It seems today will be a] [beautiful] [day of the week]
@@ -49,7 +50,7 @@ def morningRoutine():
         IFTTT("sunrise")
         snooze(SNOOZE_TIME)
     else:
-        if labStatus(): # Where "True" or "1" means closed
+        if labStatus():  # Where "True" or "1" means closed
             if not holString:
                 openPage("http://www.ll.mit.edu/status/index.html")
                 statusMessage = "The laboratory appears to be closed today.  I've opened the lab's status page, if you care to learn more. " + statusMessage
