@@ -93,13 +93,5 @@ def morningRoutine():
         IFTTT("lights_on")
         IFTTT("wakeup")
         say(statusMessage)
-        snooze(dto_to_string(datetime.now() + timedelta(minutes=50)))
-        if ishome():
-            IFTTT("wakeup")
-            setVolume(7)
-            say("You will be late for work. You now have 20 minutes to depart.")
-            snooze(dto_to_string(datetime.now() + timedelta(minutes=20)))
-            IFTTT("wakeup")
-            startMusic()
     else:
         say("Everything has been taken care of. Feel free to go back to bed.")
