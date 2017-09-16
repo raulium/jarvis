@@ -6,6 +6,7 @@ from config import BASE_PATH, EMAIL, ICLOUD, IPHONE_ID, HOME_COORD, USERNAME
 # ============== INTERNAL LIBRARIES
 # ============== EXTERNAL LIBRARIES
 import time
+import csv
 from subprocess import Popen, PIPE
 from pyicloud import PyiCloudService
 
@@ -33,13 +34,30 @@ def iCloudConnect():
             sys.exit(1)
 
 
+def check_process(PROCESS_NAME):
+    cmd = "ps -ef | grep " + PROCESS_NAME
+    process_list = Popen( cmd, stdout=PIPE, shell=True )
+    out, err = process_list.communicate()
+
+    fields = ['UID', 'PID', 'PPID', 'C', 'STIME', 'TTY', 'TIME', 'CMD']
+    reader = csv.DictReader(out.decode('ascii').splitlines(),
+                            delimiter=' ', skipinitialspace=True,
+                            fieldnames=fields)
+    for row in reader:
+        if row['CMD'] == PROCESS_NAME:
+            return True;
+        else:
+            continue
+    return False;
+
+
 def macTerm(CMD):
-    runcmd = ['sudo', '-u', USERNAME] + CMD
-    Popen(runcmd)
+    runcmd = 'sudo -u ' + USERNAME + ' ' + CMD
+    Popen(runcmd, shell=True)
 
 
 def appleScript(CMD):
-    c = ['osascript', '-e'] + CMD
+    c = 'osascript -e ' + CMD
     macTerm(c)
 
 
@@ -49,14 +67,14 @@ def setVolume(VALUE):
     is from 0 - 7. And real numbers. Meaning 3.5 is the center of the scale.
     ... w... t... f...
     """
-    cmd = ['osascript', '-e', 'set Volume ' + str(VALUE)]
-    macTerm(cmd)
+    cmd = '"set Volume ' + str(VALUE) + '"'
+    appleScript(cmd)
 
 
 def setLivingRoom():
     """ Set Audio Output to Living Room. """
     setVolume(7)
-    cmd = [BASE_PATH + 'AppleScripts/audioLivingRoom.applescript']
+    cmd = BASE_PATH + 'AppleScripts/audioLivingRoom.applescript'
     macTerm(cmd)
     time.sleep(1)
 
@@ -64,7 +82,7 @@ def setLivingRoom():
 def setDisplay():
     """ Set Audio Output to Cinema Display. """
     setVolume(4)
-    cmd = [BASE_PATH + 'AppleScripts/audioDisplay.applescript']
+    cmd = BASE_PATH + 'AppleScripts/audioDisplay.applescript'
     macTerm(cmd)
     time.sleep(1)
 
@@ -77,9 +95,8 @@ def setDisplay():
 
 def notification(TITLE, MSG):
     """ Send notification to Notificaiton Center. """
-    cmd = ['osascript', '-e',
-           "display notification " + '"' + MSG + '"' + " with title " + '"' + TITLE + '" sound name "Hero"']
-    macTerm(cmd)
+    cmd = "display notification " + '"' + MSG + '"' + " with title " + '"' + TITLE + '" sound name "Hero"'
+    appleScript(cmd)
 
 
 def ifMuted():

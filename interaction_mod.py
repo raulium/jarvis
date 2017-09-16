@@ -11,7 +11,7 @@ from gmail_mod import sendGmail
 from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, \
     CONTACTS
 # ============== INTERNAL LIBRARIES
-from mac_mod import setVolume, openApp
+from mac_mod import setVolume, openApp, check_process
 
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
 
@@ -51,7 +51,14 @@ BAD = [" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]
 
 
 def say(STRING):
-    Popen(['say', '-v', 'Lee', STRING])
+    cmd = 'say -v Lee ' + STRING
+    Popen(cmd)
+    saytrap()
+
+
+def saytrap():
+    while (check_process('say') == True):
+        continue
 
 
 def saiff(STRING, FILENAME):
@@ -179,6 +186,17 @@ def getReply():
     setVolume(4)
     time.sleep(0.5)
     return reply  # Return transcript of reply
+
+
+def micTest():
+    say("Voice authorization required.")
+    r = getReply()
+    if 'authorization' in r:
+        r = r.split('authorization')
+        r = r[1]
+    time.sleep(0.2)
+    say(r + " recieved.")
+    say('Authorization accepted.  Hello, ' + NAME + ".")
 
 
 # ============== TEXTING FUNCTIONS -- REQUIRES REFACTORING AND TESTING
