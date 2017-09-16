@@ -51,7 +51,7 @@ BAD = [" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]
 
 
 def say(STRING):
-    cmd = 'say -v Lee ' + STRING
+    cmd = 'say -v Lee "' + STRING + '"'
     Popen(cmd)
     saytrap()
 
