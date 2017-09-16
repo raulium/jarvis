@@ -4,7 +4,7 @@
 from config import MASTERKEY, HOST_IP, BASE_PATH
 # ============== INTERNAL LIBRARIES
 from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
-from interaction_mod import say
+from interaction_mod import say, micTest
 from mac_mod import startMusic, setVolume, setLivingRoom, setDisplay
 from morning_mod import morningRoutine
 from evening_mod import eveningRoutine
