@@ -5,10 +5,10 @@ from config import MASTERKEY, HOST_IP, BASE_PATH
 # ============== INTERNAL LIBRARIES
 from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say, micTest
-from mac_mod import startMusic, setVolume, setLivingRoom, setDisplay
+from mac_mod import startMusic, setLivingRoom, setDisplay
 from morning_mod import morningRoutine
 from evening_mod import eveningRoutine
-from weather_mod import dailyReport
+from weather_mod import newDailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import time
@@ -161,8 +161,7 @@ def get_curr():
     f = "WEATHER"
     status = data_check()
     if status:
-        dailyReport()
-        Popen(["afplay", "/tmp/DailyReport.aiff"])
+        newDailyReport()
         return apiReturn(f)
     else:
         abort(404)
