@@ -18,23 +18,18 @@ def do_math():  # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BRE
     answer = val1 * val2
 
     say('What is ' + str(val1) + ' multiplied by ' + str(val2) + '?')
-    time.sleep(1)  # THIS IS HIGHLY PROBLEMATIC TO BE RELYING UPON ALL THE TIME
     reply = getReply()
     answer_status = 0
     try:
         reply = int(reply)
     except ValueError:
         say(random.choice(NEGATIVE))
-        time.sleep(2)
         answer_status = 0
-
     if reply == answer:
         say(random.choice(POSITIVE))
-        time.sleep(2)
         answer_status = 1
     else:
         say(random.choice(NEGATIVE))
-        time.sleep(2)
         answer_status = 0
     return answer_status
 
@@ -45,7 +40,6 @@ def maths():  # Maybe rename this?
     math problems correctly before exiting.
     """
     say("How about a little exercise?")
-    time.sleep(3)
     i = 0
     while i < 3:
         result = do_math()
