@@ -191,15 +191,35 @@ def music_time():
         abort(404)
 
 
-@app.route('/vol', methods=['POST'])
-def volume():
-    f = "VOLUME"
-    status = data_check()
-    if status:
-        setVolume(7)
-        return apiReturn(f)
-    else:
-        abort(404)
+@app.route('/living', methods=['POST'])
+def living():
+	f = "LIVINGROOM"
+	status = data_check()
+	if status:
+		setLivingRoom()
+		return apiReturn(f)
+	else:
+		abort(404)
+
+@app.route('/display', methods=['POST'])
+def display():
+	f = "DISPLAY"
+	status = data_check()
+	if status:
+		setDisplay()
+		return apiReturn(f)
+	else:
+		abort(404)
+
+@app.route('/mic', methods=['POST'])
+def mic():
+	f = "MIC"
+	status = data_check()
+	if status:
+		micTest()
+		return apiReturn(f)
+	else:
+		abort(404)
 
 
 @app.route('/redalert', methods=['POST'])
