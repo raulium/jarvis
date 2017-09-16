@@ -30,9 +30,7 @@ from math_mod import maths
 
 # NEW MORNING
 
-def morningRoutine():
-    WD = datetime.today().weekday()
-    day_evaluation, bad_conditions, weather_segment = newDailyReport()
+def dayMessage(day_evaluation, bad_conditions, weather_segment, weekday):
     print("Bad Conditions: " + ', '.join(bad_conditions))
     day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[WD] + "."
     bad_segment = " "
@@ -42,9 +40,14 @@ def morningRoutine():
     holString = holidayDict()
     if holString:
         holiday_segment = "And may I also wish you a happy " + holString + "."
+    message = day_segment + ". " + weather_segment + ". " + bad_segment + ". " + holiday_segment + "."
+    return message
 
-    statusMessage = day_segment + ". " + weather_segment + ". " + bad_segment + ". " + holiday_segment + "."
 
+def morningRoutine():
+    WD = datetime.today().weekday()
+    day_evaluation, bad_conditions, weather_segment = newDailyReport()
+    statusMessage = dayMessage(day_evaluation, bad_conditions, weather_segment, WD)
     if WD >= 5:  # It's a weekend
         snooze(thirty_min_before(SNOOZE_TIME))
         IFTTT("sunrise")

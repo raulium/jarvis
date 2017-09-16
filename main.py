@@ -156,17 +156,6 @@ def eve_func():
         abort(404)
 
 
-@app.route('/current', methods=['POST'])
-def get_curr():
-    f = "WEATHER"
-    status = data_check()
-    if status:
-        newDailyReport()
-        return apiReturn(f)
-    else:
-        abort(404)
-
-
 @app.route('/movie', methods=['POST'])
 def movie_time():
     f = "MOVIE"
