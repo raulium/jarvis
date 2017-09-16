@@ -128,12 +128,12 @@ def openPage(URL):
 
 
 def closeApp(APPNAME):
-    cmd = 'osascript -e ' + "'" + 'quit app ' + '"' + str(APPNAME) + '"' + "'"
+    cmd = "osascript -e ' quit app " + '"' + str(APPNAME) + '"' + "'"
     Popen(cmd, shell=True)
 
 
 def openApp(APPNAME):
-    cmd = 'open -a ' + '"' + str(APPNAME) + '"'
+    cmd = "open -a '" + str(APPNAME) + "'"
     Popen(cmd, shell=True)
 
 
