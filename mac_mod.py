@@ -134,8 +134,7 @@ def closeApp(APPNAME):
 
 def openApp(APPNAME):
     cmd = "open -a '" + str(APPNAME) + "'"
-    Popen(cmd, shell=True)
-
+    macTerm(cmd)
 
 '''
 I really don't like this option. it doens't do well to identify the coordinates of the user
