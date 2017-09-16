@@ -3,7 +3,7 @@
 # ============== CONFIG PARAMETERS
 from config import READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
-from interaction_mod import WARN, say, saiff
+from interaction_mod import WARN, say
 from timing_mod import getCurrentTime, snooze
 from mac_mod import notification, setLivingRoom, setDisplay
 from IFTTT_mod import IFTTT
@@ -30,12 +30,10 @@ def eveningRoutine():
     notification(title, msg)
 
     rmsg = random.choice(WARN) + " It is " + timestring + "."
-    saiff(rmsg, "/tmp/BedTime.aiff")
 
     setLivingRoom()
-    time.sleep(20)
-    Popen(["afplay", "/tmp/BedTime.aiff"])
     time.sleep(10)
+    say(rmsg)
     setDisplay()
 
     notification(title, "This computer will lock in 10 min.")
