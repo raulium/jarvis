@@ -116,8 +116,8 @@ def startRadio():
 def startMusic():
     openApp('Spotify')
     time.sleep(5)
-    cmd1 = 'osascript -e "tell application \\"Spotify\\"" -e "activate" -e "end tell"'
-    cmd2 = 'osascript -e "tell application \\"Spotify\\"" -e "play track \\"spotify:user:spotify:playlist:37i9dQZEVXcR6wHtFF48p2\\"" -e "end tell"'
+    cmd1 = "osascript -e 'tell application " + '"' + "Spotify" + '"' + "' -e 'activate' -e 'end tell'"
+    cmd2 = "osascript -e 'tell application " + '"' + "Spotify" + '"' + "' -e 'play track " + '"' + "spotify:user:spotify:playlist:37i9dQZEVXcR6wHtFF48p2" + '"' + "' -e 'end tell'"
     Popen(cmd1, shell=True)
     time.sleep(5)
     Popen(cmd2, shell=True)

@@ -61,50 +61,37 @@ def saytrap():
         continue
 
 
-def saiff(STRING, FILENAME):
-    Popen(['say', '-v' 'Lee', '-o', str(FILENAME), str(STRING)])
-
-
 def laboratoryOptions():
     while 1:
         say("Are you ready to start your day?")
         reply = getReply()
         if reply is "ERR":
             say("I'm sorry, I didn't quite catch that.")
-            time.sleep(2.5)
         elif reply is "NULL":
             mystring = NAME + " " + random.choice(LAZY)
             say(mystring)
-            time.sleep(3)
         elif any(o in reply for o in ILL_KEYS):
             say("I'm sorry to hear that. Would you like me to contact the Laboratory?")
-            time.sleep(2.5)
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
                 sendGmail(WORK_LIST_STRING, "Sick Day", ILL_MSG)
-                time.sleep(2.5)
                 return 1
             if 'no' in confirm:
                 say("Then you shouldn't say you're feeling ill.")
-                time.sleep(2.5)
                 return 0
         elif any(o in reply for o in WFH_KEYS):
             say("Would you like me to notify the Laboratory?")
-            time.sleep(2.5)
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
                 sendGmail(WORK_LIST_STRING, "WFH Today", WFH_MSG)
-                time.sleep(2)
                 return 0
             if 'no' in confirm:
                 say("Then you should have said you were ready to start your day.")
-                time.sleep(3.5)
                 return 0
         else:
             say(random.choice(POSITIVE))
-            time.sleep(2)
             break
 
 
@@ -114,40 +101,31 @@ def volunteerOptions():
         reply = getReply()
         if reply is "ERR":
             say("I'm sorry, I didn't quite catch that.")
-            time.sleep(2.5)
         elif reply is "NULL":
             mystring = NAME + " " + random.choice(LAZY)
             say(mystring)
-            time.sleep(3)
         elif any(o in reply for o in ILL_KEYS):
             say("I'm sorry to hear that. Would you like me to contact the Museum?")
-            time.sleep(2.5)
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
                 sendGmail(VOLUNTEER_EMAIL, "Out Sick", VOLUNTEER_ILL_MSG)
-                time.sleep(2.5)
                 return 1
             if 'no' in confirm:
                 say("Then you shouldn't say you're feeling ill.")
-                time.sleep(2.5)
                 return 0
         elif any(o in reply for o in WFH_KEYS):
             say("Would you like me to notify the Museum?")
-            time.sleep(2.5)
             confirm = getReply()
             if 'yes' in confirm:
                 say("Very well. Sending message now.")
                 sendGmail(VOLUNTEER_EMAIL, "Out Today", VOLUNTEER_WFH_MSG)
-                time.sleep(2)
                 return 1
             if 'no' in confirm:
                 say("Then you should have said you were ready to start your day.")
-                time.sleep(3.5)
                 return 0
         else:
             say(random.choice(POSITIVE))
-            time.sleep(2)
             break
 
 
@@ -157,19 +135,16 @@ def dayOffOptions():
         reply = getReply()
         if reply is "ERR":
             say("I'm sorry, I didn't quite catch that.")
-            time.sleep(2.5)
         elif reply is "NULL":
             mystring = NAME + " " + random.choice(LAZY)
             say(mystring)
-            time.sleep(3)
         else:
             say(random.choice(POSITIVE))
-            time.sleep(2)
             break
 
 
 def getReply():
-    time.sleep(2)
+    time.sleep(1)
     setVolume(1)
     try:
         r = sr.Recognizer()
