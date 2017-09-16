@@ -8,10 +8,11 @@ from interaction_mod import say, micTest
 from mac_mod import startMusic, setLivingRoom, setDisplay
 from morning_mod import morningRoutine
 from evening_mod import eveningRoutine
-from weather_mod import newDailyReport
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import time
+import sys
+import logging
 from flask import Flask, request, abort
 from subprocess import Popen
 from datetime import datetime
@@ -228,8 +229,5 @@ def redalert():
 
 
 if __name__ == '__main__':
-    # logger = logging.getLogger('werkzeug')
-    # handler = logging.FileHandler('access.log')
-    # app.logger.setLevel(logging.INFO) # use the native logger of flask
-    # app.logger.addHandler(handler)
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     app.run(host=HOST_IP, threaded=True, debug=True)

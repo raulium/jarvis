@@ -144,11 +144,10 @@ def dayOffOptions():
 
 
 def getReply():
-    time.sleep(1)
-    setVolume(1)
     try:
         r = sr.Recognizer()
         with sr.Microphone() as source:
+            r.adjust_for_ambient_noise(source, duration=1)
             audio = r.listen(source, timeout=10)
         try:
             reply = r.recognize_google(audio)
@@ -158,8 +157,6 @@ def getReply():
         reply = "NULL"  # Nil heard
     except sr.UnknownValueError:
         reply = "ERR"  # Bad input condition
-    setVolume(4)
-    time.sleep(0.5)
     return reply  # Return transcript of reply
 
 
