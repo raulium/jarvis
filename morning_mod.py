@@ -32,7 +32,7 @@ from math_mod import maths
 
 def dayMessage(day_evaluation, bad_conditions, weather_segment, weekday):
     print("Bad Conditions: " + ', '.join(bad_conditions))
-    day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[WD] + "."
+    day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[weekday] + "."
     bad_segment = " "
     if len(bad_conditions) > 0:
         bad_segment = "Weather conditions to consider are: " + ', '.join(bad_conditions)

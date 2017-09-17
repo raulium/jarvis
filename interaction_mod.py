@@ -11,7 +11,7 @@ from gmail_mod import sendGmail
 from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, \
     CONTACTS
 # ============== INTERNAL LIBRARIES
-from mac_mod import setVolume, openApp, check_process
+from mac_mod import check_process
 
 # ============== CUSTOM REACTIONS & INTERACTION SPEECH
 
@@ -169,20 +169,3 @@ def micTest():
     time.sleep(0.2)
     say(r + " recieved.")
     say('Authorization accepted.  Hello, ' + NAME + ".")
-
-
-# ============== TEXTING FUNCTIONS -- REQUIRES REFACTORING AND TESTING
-def jarvisTEXT(PERSON, MESSAGE):
-    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-    client.messages.create(
-        to=CONTACTS[PERSON],
-        from_="+15097616131",
-        body=MESSAGE
-    )
-
-
-def text(PERSON, MESSAGE):
-    openApp('Messages')
-    time.sleep(2)
-    conString = 'tell application "Messages" to send "' + MESSAGE + '" to buddy "' + PERSON + '" of service "SMS"'
-    Popen(['osascript', '-e', conString])
