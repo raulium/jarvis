@@ -55,7 +55,7 @@ def dto_to_string(MY_DTO):
         return str(hour) + ':' + str(mins) + " AM"
 
 
-def thirty_min_before(time_string):
+def t_minus(time_string, minus):
     h = int(time_string.split(':')[0])
     m = int(time_string.split(':')[1].split(' ')[0])
     t = time_string.split(' ')[1]
@@ -70,7 +70,7 @@ def thirty_min_before(time_string):
         if h == 12:
             h -= 12
 
-    diff = datetime(year, month, day, h, m) - timedelta(minutes=30)
+    diff = datetime(year, month, day, h, m) - timedelta(minutes=minus)
     print(diff)
     if diff.hour > 12:
         th = int(diff.hour) - 12

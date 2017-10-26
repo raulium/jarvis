@@ -5,11 +5,9 @@ import random
 import time
 from subprocess import Popen
 import speech_recognition as sr
-from twilio.rest import Client
 from gmail_mod import sendGmail
 # ============== CONFIG PARAMETERS
-from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG, \
-    CONTACTS
+from config import NAME, WORK_LIST_STRING, ILL_MSG, WFH_MSG, VOLUNTEER_EMAIL, VOLUNTEER_ILL_MSG, VOLUNTEER_WFH_MSG
 # ============== INTERNAL LIBRARIES
 from mac_mod import check_process
 
@@ -41,7 +39,7 @@ WFH_KEYS = ["staying", "sleeping", "not going in", "day off", "working from home
 
 DAY_ASSES = ["It seems today will be a", "It appears today will be a", "Today will be a",
              "It looks as though today might be a"]
-GREAT = ["n amazing", " great", " beautiful", " terrific"]
+GREAT = ["n amazing", " great", " beautiful", " terrific", " perfect"]
 GOOD = [" good", " pretty good", " plesant", " favorable"]
 OKAY = ["n alright", " decent", "n okay", " satisfactory"]
 BAD = [" terrible", "bad", "unfavorable", "n unsatisfactory", "n ugly"]

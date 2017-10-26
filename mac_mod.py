@@ -76,7 +76,7 @@ def setLivingRoom():
     setVolume(7)
     cmd = BASE_PATH + 'AppleScripts/audioLivingRoom.applescript'
     macTerm(cmd)
-    time.sleep(1)
+    time.sleep(2)
 
 
 def setDisplay():
@@ -84,7 +84,7 @@ def setDisplay():
     setVolume(4)
     cmd = BASE_PATH + 'AppleScripts/audioDisplay.applescript'
     macTerm(cmd)
-    time.sleep(1)
+    time.sleep(2)
 
 
 # THIS DOESN'T APPEAR TO WORK... INVESTIGATE

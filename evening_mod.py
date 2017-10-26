@@ -4,13 +4,12 @@
 from config import READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import WARN, say
-from timing_mod import getCurrentTime, snooze
+from timing_mod import getCurrentTime, snooze, t_minus
 from mac_mod import notification, setLivingRoom, setDisplay
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
 import time
 import random
-from subprocess import Popen
 
 
 def eveningRoutine():
@@ -21,7 +20,7 @@ def eveningRoutine():
     msg = "It is " + timestring + "."
     notification(title, msg)
 
-    snooze("8:50 PM")
+    snooze(t_minus(READING_TIME, 10))
 
     h, m, t = getCurrentTime()
     timestring = str(h) + ":" + str(m) + " " + t
@@ -41,7 +40,7 @@ def eveningRoutine():
 
     IFTTT("reading")
 
-    snooze("9:55 PM")
+    snooze(t_minus(BED_TIME, 5))
     IFTTT("light_notice")
     snooze(BED_TIME)
     IFTTT("light_notice")

@@ -3,16 +3,16 @@
 # ============== EXTERNAL LIBRARIES
 import time
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
 from atd import atd
 # ============== CONFIG PARAMETERS\
 from config import DOW, NAME, SNOOZE_TIME, NORMAL_TIME
 # ============== INTERNAL LIBRARIES
 from interaction_mod import GREETING, WAKE, say, laboratoryOptions, volunteerOptions, dayOffOptions, DAY_ASSES
-from timing_mod import holidayDict, snooze, thirty_min_before, dto_to_string, getTime
+from timing_mod import holidayDict, snooze, t_minus, getTime
 from IFTTT_mod import IFTTT, IFTTTcmd
 from lab_mod import labStatus
-from mac_mod import setVolume, setDisplay, startMusic, openPage, ishome
+from mac_mod import setVolume, setDisplay, startMusic, openPage
 from weather_mod import getSunsetDTO, newDailyReport
 from math_mod import maths
 
@@ -49,7 +49,7 @@ def morningRoutine():
     day_evaluation, bad_conditions, weather_segment = newDailyReport()
     statusMessage = dayMessage(day_evaluation, bad_conditions, weather_segment, WD)
     if WD >= 5:  # It's a weekend
-        snooze(thirty_min_before(SNOOZE_TIME))
+        snooze(t_minus(SNOOZE_TIME, 30))
         IFTTT("sunrise")
         snooze(SNOOZE_TIME)
     else:
@@ -57,11 +57,11 @@ def morningRoutine():
             if not holString:
                 openPage("http://www.ll.mit.edu/status/index.html")
                 statusMessage = "The laboratory appears to be closed today.  I've opened the lab's status page, if you care to learn more. " + statusMessage
-            snooze(thirty_min_before(SNOOZE_TIME))
+            snooze(t_minus(SNOOZE_TIME, 30))
             IFTTT("sunrise")
             snooze(SNOOZE_TIME)
         else:
-            snooze(thirty_min_before(NORMAL_TIME))
+            snooze(t_minus(NORMAL_TIME, 30))
             IFTTT("sunrise")
             snooze(NORMAL_TIME)
 
