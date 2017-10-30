@@ -31,7 +31,7 @@ def eveningRoutine():
     rmsg = random.choice(WARN) + " It is " + timestring + "."
 
     setLivingRoom()
-    time.sleep(10)
+    time.sleep(5)
     say(rmsg)
     setDisplay()
 
