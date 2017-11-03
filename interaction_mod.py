@@ -54,8 +54,24 @@ def say(STRING):
     saytrap()
 
 
+def saiff(STRING, NAME):
+    cmd = 'say -v Lee "' + STRING + '" -o /tmp/' + NAME + '.aiff'
+    Popen(cmd, shell=True)
+    paiff(NAME)
+
+
+def paiff(NAME):
+    cmd = 'afplay /tmp/' + NAME + '.aiff'
+    Popen(cmd, shell=True)
+    aifftrap()
+
+
 def saytrap():
     while (check_process('say') == True):
+        continue
+
+def aifftrap():
+    while (check_process('afplay') == True):
         continue
 
 
