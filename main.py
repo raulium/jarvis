@@ -6,7 +6,7 @@ from config import MASTERKEY, HOST_IP, BASE_PATH
 from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say, micTest
 from mac_mod import startMusic, setLivingRoom, setDisplay
-from morning_mod import morningRoutine
+from morning_mod import morningRoutine, dayMessage
 from evening_mod import eveningRoutine
 from IFTTT_mod import IFTTT
 # ============== EXTERNAL LIBRARIES
@@ -182,33 +182,35 @@ def music_time():
 
 @app.route('/living', methods=['POST'])
 def living():
-	f = "LIVINGROOM"
-	status = data_check()
-	if status:
-		setLivingRoom()
-		return apiReturn(f)
-	else:
-		abort(404)
+    f = "LIVINGROOM"
+    status = data_check()
+    if status:
+        setLivingRoom()
+        return apiReturn(f)
+    else:
+        abort(404)
+
 
 @app.route('/display', methods=['POST'])
 def display():
-	f = "DISPLAY"
-	status = data_check()
-	if status:
-		setDisplay()
-		return apiReturn(f)
-	else:
-		abort(404)
+    f = "DISPLAY"
+    status = data_check()
+    if status:
+        setDisplay()
+        return apiReturn(f)
+    else:
+        abort(404)
+
 
 @app.route('/mic', methods=['POST'])
 def mic():
-	f = "MIC"
-	status = data_check()
-	if status:
-		micTest()
-		return apiReturn(f)
-	else:
-		abort(404)
+    f = "MIC"
+    status = data_check()
+    if status:
+        micTest()
+        return apiReturn(f)
+    else:
+        abort(404)
 
 
 @app.route('/redalert', methods=['POST'])
@@ -223,6 +225,17 @@ def redalert():
         IFTTT('klaxon')
         time.sleep(10)
         setDisplay()
+        return apiReturn(f)
+    else:
+        abort(404)
+
+@app.route('/weatehr', methods=['POST'])
+def current():
+    f = "WEATHER"
+    status = data_check()
+    if status:
+        msg = dayMessage()
+        say(msg)
         return apiReturn(f)
     else:
         abort(404)

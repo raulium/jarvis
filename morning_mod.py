@@ -30,9 +30,11 @@ from math_mod import maths
 
 # NEW MORNING
 
-def dayMessage(day_evaluation, bad_conditions, weather_segment, weekday):
+def dayMessage():
+    WD = datetime.today().weekday()
+    day_evaluation, bad_conditions, weather_segment = newDailyReport()
     print("Bad Conditions: " + ', '.join(bad_conditions))
-    day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[weekday] + "."
+    day_segment = random.choice(DAY_ASSES) + day_evaluation + " " + DOW[WD] + "."
     bad_segment = " "
     if len(bad_conditions) > 0:
         bad_segment = "Weather conditions to consider are: " + ', '.join(bad_conditions)
@@ -46,8 +48,7 @@ def dayMessage(day_evaluation, bad_conditions, weather_segment, weekday):
 
 def morningRoutine():
     WD = datetime.today().weekday()
-    day_evaluation, bad_conditions, weather_segment = newDailyReport()
-    statusMessage = dayMessage(day_evaluation, bad_conditions, weather_segment, WD)
+    statusMessage = dayMessage()
     if WD >= 5:  # It's a weekend
         snooze(t_minus(SNOOZE_TIME, 30))
         IFTTT("sunrise")
