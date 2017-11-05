@@ -229,7 +229,7 @@ def redalert():
     else:
         abort(404)
 
-@app.route('/weatehr', methods=['POST'])
+@app.route('/weather', methods=['POST'])
 def current():
     f = "WEATHER"
     status = data_check()
