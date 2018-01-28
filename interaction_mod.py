@@ -154,24 +154,41 @@ def dayOffOptions():
             say(mystring)
         else:
             say(random.choice(POSITIVE))
-            break
+            return 0
 
 
 def getReply():
-    try:
-        r = sr.Recognizer()
-        with sr.Microphone() as source:
-            r.adjust_for_ambient_noise(source, duration=1)
-            audio = r.listen(source, timeout=10)
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        reply = "NULL"
+        r.adjust_for_ambient_noise(source, duration=1)
+        audio = r.listen(source, timeout=10)
         try:
-            reply = r.recognize_google(audio)
-        except LookupError:
-            reply = "ERR"  # Bad input condition
-    except sr.WaitTimeoutError:
-        reply = "NULL"  # Nil heard
-    except sr.UnknownValueError:
-        reply = "ERR"  # Bad input condition
-    return reply  # Return transcript of reply
+            reply = r.recognize_sphinx(audio)
+        except sr.WaitTimeoutError:
+            reply = "NULL"
+        except sr.UnknownValueError:
+            reply = "ERR"
+        except sr.RequestError as e:
+            print("Spinx error; {0}".format(e))
+        return reply
+
+
+# def getReply():
+#     try:
+#         r = sr.Recognizer()
+#         with sr.Microphone() as source:
+#             r.adjust_for_ambient_noise(source, duration=1)
+#             audio = r.listen(source, timeout=10)
+#         try:
+#             reply = r.recognize_google(audio)
+#         except LookupError:
+#             reply = "ERR"  # Bad input condition
+#     except sr.WaitTimeoutError:
+#         reply = "NULL"  # Nil heard
+#     except sr.UnknownValueError:
+#         reply = "ERR"  # Bad input condition
+#     return reply  # Return transcript of reply
 
 
 def micTest():
