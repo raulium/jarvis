@@ -231,7 +231,7 @@ def newDailyReport():
     data = getWeatherJSON('forecast')
     high = int(data['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
     low = int(data['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
-    if feels_like < temp:
+    if (feels_like < temp) and (temp - feels_like > 5):
         weather_string = "Though the temperature is " + str(temp) + ", it feels like " + str(
             feels_like) + " degrees.  It's expected to reach " + str(high) + " today, with a low of " + str(low) + "."
     else:
