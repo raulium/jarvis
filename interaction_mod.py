@@ -165,6 +165,7 @@ def getReply():
         audio = r.listen(source, timeout=10)
         try:
             reply = r.recognize_sphinx(audio)
+            print("R:\t" + str(reply))
         except sr.WaitTimeoutError:
             reply = "NULL"
         except sr.UnknownValueError:
