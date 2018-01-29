@@ -1,8 +1,8 @@
 #!/usr/local/env python
 
 # ============== EXTERNAL LIBRARIES
-import time
 import random
+from word2number import w2n
 # ============== CONFIG PARAMETERS
 # ============== INTERNAL LIBRARIES
 from interaction_mod import POSITIVE, NEGATIVE, say, getReply
@@ -19,19 +19,17 @@ def do_math():  # COULD USE REWORK. WHAT HAPPENS IF YOU NEVER HEAR A REPLY? (BRE
 
     say('What is ' + str(val1) + ' multiplied by ' + str(val2) + '?')
     reply = getReply()
-    answer_status = 0
     try:
-        reply = int(reply)
+        reply = w2n.word_to_num(reply)
     except ValueError:
         say(random.choice(NEGATIVE))
-        answer_status = 0
+        return 0
     if reply == answer:
         say(random.choice(POSITIVE))
-        answer_status = 1
+        return 1
     else:
         say(random.choice(NEGATIVE))
-        answer_status = 0
-    return answer_status
+        return 0
 
 
 def maths():  # Maybe rename this?

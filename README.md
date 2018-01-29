@@ -22,3 +22,4 @@ Exhaustive list of python libraries needed
 * BeautifulSoup
 * urllib
 * Flask
+* word2number
