@@ -15,6 +15,7 @@ from lab_mod import labStatus
 from mac_mod import setVolume, setDisplay, startMusic, openPage
 from weather_mod import getSunsetDTO, newDailyReport
 from math_mod import maths
+from motivation_mod import daysToWeekend, weeksToDate, counterString, motivate
 
 
 # =======================================================================
@@ -97,5 +98,9 @@ def morningRoutine():
         IFTTT("lights_on")
         IFTTT("wakeup")
         say(statusMessage)
+        semesterEnd = datetime(2018, 05, 03)
+        say(counterString(daysToWeekend(), "day") + " the weekend, and " + counterString(weeksToDate(semesterEnd),"week") + " the end of the semester.")
+        say(motivate())
+
     else:
         say("Everything has been taken care of. Feel free to go back to bed.")
