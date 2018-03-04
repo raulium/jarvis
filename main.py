@@ -230,7 +230,7 @@ def redalert():
         abort(404)
 
 @app.route('/weather', methods=['POST'])
-def sounds():
+def current():
     f = "WEATHER"
     status = data_check()
     if status:
@@ -242,15 +242,16 @@ def sounds():
 
 
 @app.route('/noise', methods=['POST'])
-def current():
-    f = "EVENING"
+def sounds():
+    f = "NOISE"
     status = data_check()
     if status:
         if checkVacationStatus():
             macTerm('itunes start')
+            return apiReturn(f)
         else:
             say('Vacation mode is inactive.')
-        return apiReturn(f)
+            return apiReturn(f + " INACTIVE")
     else:
         abort(404)
 
