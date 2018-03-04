@@ -247,7 +247,7 @@ def sounds():
     status = data_check()
     if status:
         if checkVacationStatus():
-            macTerm('itunes start')
+            Popen('sudo -u ' + USERNAME + ' itunes start')
             return apiReturn(f)
         else:
             say('Vacation mode is inactive.')
