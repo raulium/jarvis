@@ -8,19 +8,22 @@ from IFTTT_mod import IFTTT
 from mac_mod import openApp, setLivingRoom, startRadio, setVolume, setDisplay, macTerm
 # ============== EXTERNAL LIBRARIES
 import os.path
+import time
 
 
 def vMorningRoutine():
     snooze(SNOOZE_TIME)
+    macTerm('itunes play')
 
-
-# setLivingRoom()
-# startRadio()
 
 def vEveningRoutine():
     snooze(READING_TIME)
     # closeApp("Google Chrome")
     IFTTT("reading")
+    macTerm('itunes stop')
+    for i in range(1,7,1):
+        macTerm('itunes next');
+        sleep(0.5)
     snooze(BED_TIME)
     IFTTT("sunset")
     IFTTT("lights_off")
