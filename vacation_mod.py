@@ -50,12 +50,12 @@ def checkAwayStatus():
 
 
 def setVacation():
-    cmd = ['touch', '/tmp/vacation.lock']
+    cmd = 'touch /tmp/vacation.lock'
     macTerm(cmd)
 
 
 def rmVacation():
-    cmd = ['rm', '/tmp/vacation.lock']
+    cmd = 'rm /tmp/vacation.lock'
     macTerm(cmd)
 
 
