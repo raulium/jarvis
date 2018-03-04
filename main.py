@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 # ============== CONFIG PARAMETERS
-from config import MASTERKEY, HOST_IP, BASE_PATH, USERNAME
+from config import MASTERKEY, HOST_IP, BASE_PATH
 # ============== INTERNAL LIBRARIES
 from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say, micTest
-from mac_mod import startMusic, setLivingRoom, setDisplay, macTerm
+from mac_mod import startMusic, setLivingRoom, setDisplay
 from morning_mod import morningRoutine, dayMessage
 from evening_mod import eveningRoutine
 from IFTTT_mod import IFTTT
@@ -237,21 +237,6 @@ def current():
         msg = dayMessage()
         say(msg)
         return apiReturn(f)
-    else:
-        abort(404)
-
-
-@app.route('/noise', methods=['POST'])
-def sounds():
-    f = "NOISE"
-    status = data_check()
-    if status:
-        if checkVacationStatus():
-            Popen('sudo -u ' + USERNAME + ' itunes start')
-            return apiReturn(f)
-        else:
-            say('Vacation mode is inactive.')
-            return apiReturn(f + " INACTIVE")
     else:
         abort(404)
 

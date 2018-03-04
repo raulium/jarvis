@@ -1,29 +1,23 @@
 #!/usr/local/env python
 
 # ============== CONFIG PARAMETERS
-from config import SNOOZE_TIME, READING_TIME, BED_TIME, USERNAME
+from config import SNOOZE_TIME, READING_TIME, BED_TIME
 # ============== INTERNAL LIBRARIES
 from timing_mod import snooze
 from IFTTT_mod import IFTTT
 from mac_mod import openApp, setLivingRoom, startRadio, setVolume, setDisplay, macTerm
 # ============== EXTERNAL LIBRARIES
 import os.path
-from subprocess import Popen
 
 
 def vMorningRoutine():
     snooze(SNOOZE_TIME)
-    Popen('sudo -u ' + USERNAME + ' itunes play')
 
 
 def vEveningRoutine():
     snooze(READING_TIME)
     # closeApp("Google Chrome")
     IFTTT("reading")
-    Popen('sudo -u ' + USERNAME + ' itunes stop')
-    for i in range(1,7,1):
-        Popen('sudo -u ' + USERNAME + ' itunes next');
-        sleep(0.5)
     snooze(BED_TIME)
     IFTTT("sunset")
     IFTTT("lights_off")
