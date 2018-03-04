@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # ============== CONFIG PARAMETERS
-from config import MASTERKEY, HOST_IP, BASE_PATH
+from config import MASTERKEY, HOST_IP, BASE_PATH, USERNAME
 # ============== INTERNAL LIBRARIES
 from vacation_mod import vMorningRoutine, vEveningRoutine, checkVacationStatus, setVacation, rmVacation
 from interaction_mod import say, micTest
