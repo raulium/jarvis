@@ -230,7 +230,7 @@ def redalert():
         abort(404)
 
 @app.route('/weather', methods=['POST'])
-def current():
+def sounds():
     f = "WEATHER"
     status = data_check()
     if status:
