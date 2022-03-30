@@ -246,7 +246,10 @@ def newDailyReport():
 def dewPointAverage(data):
     dewList = list()
     for d in data['hourly_forecast']:
-        dewList.append(int(d['dewpoint']['english']))
+        i = d['dewpoint']['english']
+        i = float(i)
+        i = int(i)
+        dewList.append(i)
     return sum(dewList) / len(dewList)
 
 

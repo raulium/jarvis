@@ -98,8 +98,8 @@ def morningRoutine():
         IFTTT("lights_on")
         IFTTT("wakeup")
         say(statusMessage)
-        semesterEnd = datetime(2018, 05, 03)
-        say(counterString(daysToWeekend(), "day") + " the weekend, and " + counterString(weeksToDate(semesterEnd),"week") + " the end of the semester.")
+        semesterEnd = datetime(2018, 06, 22)
+        say(counterString(daysToWeekend(), "day") + " the weekend, and " + counterString(weeksToDate(semesterEnd),"week") + " the Chad returns.")
         say(motivate())
 
     else:
